@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.testlogin.interfaces.Asyncronable;
@@ -18,7 +19,9 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity implements Asyncronable {
 
     Button btnLogin;
-    Button btnRegister;
+    Button btnToRegister;
+    EditText txtUser;
+    EditText txtPasswordLogin;
     ProgressBar prgLogin;
 
     @Override
@@ -27,16 +30,18 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable {
         setContentView(R.layout.activity_login);
 
         btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
-        prgLogin = findViewById(R.id.pgbRegister);
+        btnToRegister = findViewById(R.id.btnToRegister);
+        txtUser = findViewById(R.id.txtUser);
+        txtPasswordLogin = findViewById(R.id.txtPasswordLogin);
+        prgLogin = findViewById(R.id.pgbLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             JSONObject json = new JSONObject();
             try {
-                json.put("email", "martinpromano@gmail.com");
-                json.put("password", "prueba123");
+                json.put("email", txtUser.getText().toString());
+                json.put("password", txtPasswordLogin.getText().toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -45,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable {
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        btnToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this, RegisterActivity.class);

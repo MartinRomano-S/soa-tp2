@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishActivity(0);
+                finish();
             }
         });
     }
