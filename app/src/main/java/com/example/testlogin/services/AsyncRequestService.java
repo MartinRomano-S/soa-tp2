@@ -73,6 +73,7 @@ public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject response) {
         asyncActivityUI.showResponseMessage(response);
+        asyncActivityUI.afterRequest(response);
         asyncActivityUI.toggleProgressBar(false);
     }
 

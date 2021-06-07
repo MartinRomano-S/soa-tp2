@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.testlogin.interfaces.AsyncronableRequest;
 import com.example.testlogin.services.AsyncRequestService;
@@ -25,8 +26,6 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
     EditText txtUser;
     EditText txtPasswordLogin;
     ProgressBar prgLogin;
-
-    /* COMENTARIO DE PRUEBA */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,5 +87,19 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
             }
         });
         dialog.create().show();
+    }
+
+    public void afterRequest(JSONObject msg){
+        try {
+            boolean success = msg.getBoolean("success");
+            if(success){
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

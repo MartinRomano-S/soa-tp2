@@ -101,4 +101,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
         });
         dialog.create().show();
     }
+
+    public void afterRequest(JSONObject msg){
+
+    }
 }
