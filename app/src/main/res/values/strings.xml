@@ -9,7 +9,12 @@
     <string name="api_event_url">event</string>
 
     <!-- TEXTOS UI -->
-    <string name="login">Iniciar Sesión</string>
-    <string name="register">Registrarse</string>
-    <string name="cancel">Cancelar</string>
+    <string name="lblLogin">Iniciar Sesión</string>
+    <string name="lblRegister">Registrarse</string>
+    <string name="lblCancel">Cancelar</string>
+    <string name="lblPassword">Contraseña</string>
+    <string name="lblEmail">Email</string>
+    <string name="lblDNI">DNI</string>
+    <string name="lblLastname">Apellido</string>
+    <string name="lblName">Nombre</string>
 </resources>
