@@ -8,8 +8,10 @@
     tools:context=".RegisterActivity">
 
     <ScrollView
+        android:id="@+id/scrRegister"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,7 +22,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -128,7 +130,7 @@
                 android:text="@string/lblRegister"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
