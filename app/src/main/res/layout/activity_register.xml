@@ -8,8 +8,10 @@
     tools:context=".RegisterActivity">
 
     <ScrollView
+        android:id="@+id/scrRegister"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,18 +22,21 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:contentDescription="@string/app_name" />
 
             <EditText
                 android:id="@+id/txtName"
-                android:hint="Nombre"
+                android:hint="@string/lblName"
+                android:importantForAutofill="no"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -44,10 +49,12 @@
 
             <EditText
                 android:id="@+id/txtLastname"
-                android:hint="Apellido"
+                android:hint="@string/lblLastname"
+                android:importantForAutofill="no"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -60,10 +67,12 @@
 
             <EditText
                 android:id="@+id/txtDNI"
-                android:hint="DNI"
+                android:hint="@string/lblDNI"
+                android:importantForAutofill="no"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:ems="10"
                 android:inputType="number"
                 android:background="@drawable/edit_text"
@@ -76,10 +85,12 @@
 
             <EditText
                 android:id="@+id/txtEmail"
-                android:hint="Email"
+                android:hint="@string/lblEmail"
+                android:importantForAutofill="no"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:background="@drawable/edit_text"
@@ -92,10 +103,12 @@
 
             <EditText
                 android:id="@+id/txtPassword"
-                android:hint="Contraseña"
+                android:hint="@string/lblPassword"
+                android:importantForAutofill="no"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:ems="10"
                 android:inputType="textPassword"
                 android:background="@drawable/edit_text"
@@ -114,10 +127,10 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_primary"
-                android:text="@string/register"
+                android:text="@string/lblRegister"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
@@ -130,7 +143,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_secondary"
-                android:text="@string/cancel"
+                android:text="@string/lblCancel"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
