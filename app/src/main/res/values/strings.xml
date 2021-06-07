@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TestLogin</string>
+
+    <!-- ENDPOINTS API SOA -->
+    <string name="api_base_url">http://so-unlam.net.ar/api/api/</string>
+    <string name="api_login_url">login</string>
+    <string name="api_register_url">register</string>
+    <string name="api_refresh_url">refresh</string>
+    <string name="api_event_url">event</string>
+
+    <!-- TEXTOS UI -->
+    <string name="login">Iniciar Sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="cancel">Cancelar</string>
+</resources>
