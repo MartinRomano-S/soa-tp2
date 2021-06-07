@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
     EditText txtPasswordLogin;
     ProgressBar prgLogin;
 
+    /* COMENTARIO DE PRUEBA */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
