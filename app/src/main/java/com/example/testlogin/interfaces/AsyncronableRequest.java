@@ -1,7 +1,10 @@
 package com.example.testlogin.interfaces;
 
-public interface Asyncronable {
+import org.json.JSONObject;
+
+public interface AsyncronableRequest {
     void toggleProgressBar(boolean status);
+    void showResponseMessage(JSONObject msg);
    // void executeActivity(Class<?> activity);
     //void showMessage(String msg);
 }

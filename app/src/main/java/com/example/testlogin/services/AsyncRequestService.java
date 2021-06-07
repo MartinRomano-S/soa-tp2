@@ -1,12 +1,8 @@
 package com.example.testlogin.services;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 
-import com.example.testlogin.R;
-import com.example.testlogin.interfaces.Asyncronable;
+import com.example.testlogin.interfaces.AsyncronableRequest;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -21,20 +17,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
-public class LoginService extends AsyncTask<String, Void, JSONObject> {
+public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
 
-    Context c;
-    Asyncronable asyncActivityUI;
-    AlertDialog.Builder dialog;
-    String endpoint;
-    SOAAPIallowedMethodsEnum method;
-    JSONObject data;
+    private AsyncronableRequest asyncActivityUI;
+    private String endpoint;
+    private SOAAPIallowedMethodsEnum method;
+    private JSONObject data;
+    private final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
 
-    public LoginService(Context c, Asyncronable asyncActivityUI, int endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
-        this.c = c;
+    public AsyncRequestService(AsyncronableRequest asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
         this.asyncActivityUI = asyncActivityUI;
-        this.endpoint = c.getString(R.string.api_base_url) + c.getString(endpoint);
+        this.endpoint = API_BASE_URL + endpoint;
         this.method = method;
         this.data = data;
     }
@@ -77,20 +72,7 @@ public class LoginService extends AsyncTask<String, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject response) {
-        dialog = new AlertDialog.Builder(c);
-        dialog.setTitle("Bienvenido");
-        try {
-            dialog.setMessage("Success: " + response.getString("success") + "\nMessage: " + response.getString("msg"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        dialog.create().show();
+        asyncActivityUI.showResponseMessage(response);
         asyncActivityUI.toggleProgressBar(false);
     }
 
@@ -104,7 +86,7 @@ public class LoginService extends AsyncTask<String, Void, JSONObject> {
     }
 
     private void writeRequest(OutputStream out) throws IOException {
-        byte[] input = data.toString().getBytes("utf-8");
+        byte[] input = data.toString().getBytes(StandardCharsets.UTF_8);
         out.write(input, 0, input.length);
     }
 

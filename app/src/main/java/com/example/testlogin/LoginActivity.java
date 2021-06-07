@@ -2,6 +2,8 @@ package com.example.testlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,14 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.example.testlogin.interfaces.Asyncronable;
-import com.example.testlogin.services.LoginService;
+import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.services.AsyncRequestService;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements Asyncronable {
+public class LoginActivity extends AppCompatActivity implements AsyncronableRequest {
 
     Button btnLogin;
     Button btnToRegister;
@@ -45,8 +47,8 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            LoginService ls = new LoginService(LoginActivity.this, LoginActivity.this, R.string.api_login_url, SOAAPIallowedMethodsEnum.POST, json);
-            ls.execute();
+            AsyncRequestService asyncRequestService = new AsyncRequestService(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, json);
+            asyncRequestService.execute();
             }
         });
 
@@ -65,5 +67,24 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable {
             prgLogin.setVisibility(View.VISIBLE);
         else
             prgLogin.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showResponseMessage(JSONObject msg) {
+        AlertDialog.Builder dialog;
+        dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Bienvenido");
+        try {
+            dialog.setMessage("Success: " + msg.getString("success") + "\nMessage: " + msg.getString("msg"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.create().show();
     }
 }
