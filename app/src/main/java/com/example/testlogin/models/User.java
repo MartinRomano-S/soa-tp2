@@ -1,29 +1,21 @@
 package com.example.testlogin.models;
 
-import com.example.testlogin.interfaces.JSONable;
+import android.widget.Toast;
 
+import com.example.testlogin.RegisterActivity;
+import com.example.testlogin.interfaces.JSONable;
+import com.example.testlogin.utils.Configuration;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User implements JSONable {
     private String name;
     private String lastname;
     private Integer dni;
-    private String email;
-    private String password;
-    private Integer commision;
-    private Integer group;
+    private Credentials credentials;
 
     public User(){}
-
-    public User(String name, String lastname, Integer dni, String email, String password) {
-        this.name = name;
-        this.lastname = lastname;
-        this.dni = dni;
-        this.email = email;
-        this.password = password;
-        this.commision = 3900;
-        this.group = 4;
-    }
 
     public String getName() {
         return name;
@@ -49,24 +41,32 @@ public class User implements JSONable {
         this.dni = dni;
     }
 
-    public String getEmail() {
-        return email;
+    public Credentials getCredentials() {
+        return credentials;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 
     @Override
     public JSONObject toJSON() {
-        return null;
+
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("env", Configuration.API_ENVIRONMENT);
+            json.put("name", getName());
+            json.put("lastname", getLastname());
+            json.put("dni", getDni());
+            json.put("email", credentials.getEmail());
+            json.put("password", credentials.getPassword());
+            json.put("commission", Configuration.COMMISSION);
+            json.put("group", Configuration.GROUP);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 }

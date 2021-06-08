@@ -3,6 +3,7 @@ package com.example.testlogin.services;
 import android.os.AsyncTask;
 
 import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -28,11 +29,10 @@ public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
     private String endpoint;
     private SOAAPIallowedMethodsEnum method;
     private JSONObject data;
-    private static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
 
     public AsyncRequestService(AsyncronableRequest asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
         this.asyncActivityUI = asyncActivityUI;
-        this.endpoint = API_BASE_URL + endpoint;
+        this.endpoint = Configuration.API_BASE_URL + endpoint;
         this.method = method;
         this.data = data;
     }
@@ -81,8 +81,8 @@ public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
     }
 
     private void addHeaders(HttpURLConnection urlConnection) throws ProtocolException {
-        urlConnection.setReadTimeout(10000);
-        urlConnection.setConnectTimeout(20000);
+        urlConnection.setReadTimeout(Configuration.REQUEST_READ_TIMEOUT);
+        urlConnection.setConnectTimeout(Configuration.REQUEST_CONNECTION_TIMEOUT);
         urlConnection.setDoOutput(true);
         urlConnection.setRequestMethod(method.toString());
         urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");

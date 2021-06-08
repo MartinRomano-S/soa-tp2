@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.models.Credentials;
+import com.example.testlogin.models.User;
 import com.example.testlogin.services.AsyncRequestService;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
@@ -47,22 +49,13 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
             @Override
             public void onClick(View view) {
 
-                JSONObject json = new JSONObject();
+                User user = new User();
+                user.setCredentials(new Credentials(txtEmail.getText().toString(), txtPassword.getText().toString()));
+                user.setDni(Integer.valueOf(txtDNI.getText().toString()));
+                user.setName(txtName.getText().toString());
+                user.setLastname(txtLastname.getText().toString());
 
-                try {
-                    json.put("env", "TEST");
-                    json.put("name", txtName.getText().toString());
-                    json.put("lastname", txtLastname.getText().toString());
-                    json.put("dni", Integer.valueOf(txtDNI.getText().toString()));
-                    json.put("email", txtEmail.getText().toString());
-                    json.put("password", txtPassword.getText().toString());
-                    json.put("commission", 3900);
-                    json.put("group", 4);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(RegisterActivity.this, "Error en el JSON", Toast.LENGTH_SHORT).show();
-                }
-                AsyncRequestService asyncRequestService = new AsyncRequestService(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, json);
+                AsyncRequestService asyncRequestService = new AsyncRequestService(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
                 asyncRequestService.execute();
             }
         });
