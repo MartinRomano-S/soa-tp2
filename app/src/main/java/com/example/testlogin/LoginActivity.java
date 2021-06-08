@@ -1,12 +1,15 @@
 package com.example.testlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +20,9 @@ import com.example.testlogin.interfaces.AsyncronableRequest;
 import com.example.testlogin.models.Credentials;
 import com.example.testlogin.models.User;
 import com.example.testlogin.services.AsyncRequestService;
+import com.example.testlogin.services.JavaMailAPI;
 import com.example.testlogin.utils.BatteryReceiver;
+import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -29,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
     Button btnToRegister;
     EditText txtUser;
     EditText txtPasswordLogin;
+    Credentials credentials;
     ProgressBar prgLogin;
     private BatteryReceiver batteryReceiver = new BatteryReceiver();
     private IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
@@ -48,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
             @Override
             public void onClick(View view) {
 
-            Credentials credentials = new Credentials();
+            credentials = new Credentials();
             credentials.setEmail(txtUser.getText().toString());
             credentials.setPassword(txtPasswordLogin.getText().toString());
 
@@ -87,35 +93,32 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
     }
 
     @Override
-    public void showResponseMessage(JSONObject msg) {
-        AlertDialog.Builder dialog;
-        dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Bienvenido");
-        try {
-            dialog.setMessage("Success: " + msg.getString("success") + "\nMessage: " + msg.getString("msg"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+    public void afterRequest(JSONObject response) {
 
-            }
-        });
-        dialog.create().show();
-    }
+        String msg = getString(R.string.credentialsError);
+        boolean success = false;
 
-    public void afterRequest(JSONObject msg){
         try {
-            boolean success = msg.getBoolean("success");
-            if(success){
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(i);
-            }
+            success = response.getBoolean("success");
         } catch (JSONException e) {
-            e.printStackTrace();
+            msg = getString(R.string.requestError);
         }
 
+        if(success) {
+            Intent i = new Intent(LoginActivity.this, TwoFactorActivity.class);
+            i.putExtra("email", credentials.getEmail());
 
+            startActivity(i);
+        } else {
+            AlertDialog.Builder dialog;
+            dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(getString(R.string.titleError));
+            dialog.setMessage(msg);
+            dialog.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+            dialog.create().show();
+        }
     }
 }

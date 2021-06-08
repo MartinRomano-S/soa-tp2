@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,12 +78,13 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
     }
 
     @Override
-    public void showResponseMessage(JSONObject msg) {
+    public void afterRequest(JSONObject response){
         AlertDialog.Builder dialog;
         dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Bienvenido");
+        dialog.setMessage("");
         try {
-            dialog.setMessage("Success: " + msg.getString("success") + "\nToken: " + msg.getString("token"));
+            dialog.setMessage("Success: " + response.getString("success") + "\nToken: " + response.getString("token"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -93,9 +95,5 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
             }
         });
         dialog.create().show();
-    }
-
-    public void afterRequest(JSONObject msg){
-
     }
 }
