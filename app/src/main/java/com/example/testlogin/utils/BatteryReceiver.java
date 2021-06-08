@@ -47,17 +47,19 @@ public class BatteryReceiver extends BroadcastReceiver {
                     break;
             }
 
-            if(percentage >= 90)
+            if(percentage >= 99)
+                imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_100));
+            else if (percentage >= 90)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_90));
-             else if (percentage >= 80)
+            else if (percentage >= 80)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_80));
-             else if (percentage >= 60)
+            else if (percentage >= 60)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_60));
-             else if (percentage >= 40)
+            else if (percentage >= 40)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_50));
-             else if (percentage >= 30)
+            else if (percentage >= 30)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_30));
-             else
+            else
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_20));
         }
     }

@@ -5,23 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
 import com.example.testlogin.models.User;
-import com.example.testlogin.services.AsyncRequestService;
+import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterActivity extends AppCompatActivity implements AsyncronableRequest {
+public class RegisterActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
     Button btnCancel;
     Button btnRegister;
@@ -56,8 +54,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
                 user.setName(txtName.getText().toString());
                 user.setLastname(txtLastname.getText().toString());
 
-                AsyncRequestService asyncRequestService = new AsyncRequestService(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
-                asyncRequestService.execute();
+                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
+                asyncHttpRequest.execute();
             }
         });
 
@@ -70,15 +68,20 @@ public class RegisterActivity extends AppCompatActivity implements AsyncronableR
     }
 
     @Override
-    public void toggleProgressBar(boolean status) {
-        if (status)
-            pgbRegister.setVisibility(View.VISIBLE);
-        else
-            pgbRegister.setVisibility(View.GONE);
+    public void showProgress(String msg) {
+        pgbRegister.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        pgbRegister.setVisibility(View.GONE);
     }
 
     @Override
     public void afterRequest(JSONObject response){
+
+        //TODO
+        //Agregar lógica para ir a login o a twoFactor. Ver manejo de token
         AlertDialog.Builder dialog;
         dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Bienvenido");

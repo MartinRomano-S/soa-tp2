@@ -2,7 +2,7 @@ package com.example.testlogin.services;
 
 import android.os.AsyncTask;
 
-import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
@@ -23,14 +23,14 @@ import java.nio.charset.StandardCharsets;
 /**
  * Clase genérica para gestionar request en una tarea en segundo plano
  */
-public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
+public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
 
-    private AsyncronableRequest asyncActivityUI;
+    private Asyncronable<JSONObject> asyncActivityUI;
     private String endpoint;
     private SOAAPIallowedMethodsEnum method;
     private JSONObject data;
 
-    public AsyncRequestService(AsyncronableRequest asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
+    public AsyncHttpRequest(Asyncronable<JSONObject> asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
         this.asyncActivityUI = asyncActivityUI;
         this.endpoint = Configuration.API_BASE_URL + endpoint;
         this.method = method;
@@ -38,7 +38,7 @@ public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
     }
 
     @Override
-    protected void onPreExecute() { asyncActivityUI.toggleProgressBar(true); }
+    protected void onPreExecute() { asyncActivityUI.showProgress(""); }
 
     @Override
     protected JSONObject doInBackground(String... strings) {
@@ -76,7 +76,7 @@ public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject response) {
         asyncActivityUI.afterRequest(response);
-        asyncActivityUI.toggleProgressBar(false);
+        asyncActivityUI.hideProgress();
     }
 
     private void addHeaders(HttpURLConnection urlConnection) throws ProtocolException {

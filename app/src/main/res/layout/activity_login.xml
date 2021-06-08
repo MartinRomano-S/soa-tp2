@@ -12,60 +12,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/app_name"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtUser"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
         android:background="@drawable/edit_text"
+        android:ems="10"
         android:hint="@string/lblEmail"
-        android:text="martinpromano@gmail.com"
         android:importantForAutofill="no"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
+        android:inputType="textEmailAddress"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="martinpromano@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <EditText
         android:id="@+id/txtPasswordLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:inputType="textPassword"
         android:background="@drawable/edit_text"
+        android:ems="10"
         android:hint="@string/lblPassword"
-        android:text="prueba123"
         android:importantForAutofill="no"
-        app:layout_constraintTop_toBottomOf="@id/txtUser"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="prueba123"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtUser" />
 
     <ImageView
         android:id="@+id/imgBatteryLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toBottomOf="@id/txtPasswordLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtPasswordLogin" />
 
     <TextView
         android:id="@+id/txtBattery"
@@ -74,9 +73,9 @@
         android:layout_marginTop="2dp"
         android:ems="10"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/imgBatteryLevel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgBatteryLevel" />
 
     <ImageView
         android:id="@+id/imgCharging"
@@ -86,16 +85,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtBattery" />
 
+    <ProgressBar
+        android:id="@+id/pgbLogin"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnLogin"
+        android:layout_marginBottom="10dp"/>
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="162dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_primary"
         android:text="@string/lblLogin"
         android:textColor="@color/colorPrimary"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnToRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -105,20 +115,10 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="504dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/button_secondary"
         android:text="@string/lblRegister"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/pgbLogin" />
-
-    <ProgressBar
-        android:id="@+id/pgbLogin"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,31 +1,35 @@
 package com.example.testlogin;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.example.testlogin.services.JavaMailAPI;
+import com.example.testlogin.interfaces.Asyncronable;
+import com.example.testlogin.services.AsyncMailSending;
 import com.example.testlogin.utils.Configuration;
+
+import org.json.JSONObject;
 
 /**
  * EXPERIMENTAL
  *
  * Funciona el envío de SMS pero se duplican ya que tienen como SOURCE el mismo numero
  */
-public class TwoFactorActivity extends AppCompatActivity {
+public class TwoFactorActivity extends AppCompatActivity implements Asyncronable<String> {
 
     Button btnCancel;
     Button btnResendVerificationCode;
     TextView txtLblVerificationCode;
+    ProgressBar pgbVerify;
     String email;
 
     @Override
@@ -36,6 +40,7 @@ public class TwoFactorActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancelVerification);
         txtLblVerificationCode = findViewById(R.id.lblVerificationCodeSent);
         btnResendVerificationCode = findViewById(R.id.btnResendVerification);
+        pgbVerify = findViewById(R.id.pgbVerify);
 
         Intent i = getIntent();
         email = i.getStringExtra("email");
@@ -72,7 +77,22 @@ public class TwoFactorActivity extends AppCompatActivity {
 
     public void sendEmailVerificationCode(String email) {
 
-        JavaMailAPI javaMailAPI = new JavaMailAPI(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, Configuration.generateRandomCode()));
-        javaMailAPI.execute();
+        AsyncMailSending asyncMailSending = new AsyncMailSending(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, Configuration.generateRandomCode()));
+        asyncMailSending.execute();
+    }
+
+    @Override
+    public void showProgress(String msg) {
+        pgbVerify.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        pgbVerify.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void afterRequest(String response) {
+
     }
 }
