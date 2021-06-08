@@ -27,6 +27,7 @@
     <string name="lblBattery">%1$d %%</string>
     <string name="lblVerificationCode">Código de verificación</string>
     <string name="lblVerify">Verificar</string>
+    <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
 
     <!-- ERRORES -->
     <string name="titleError">Error</string>
@@ -38,5 +39,6 @@
     <string name="lblVerificationCodeSent">Se ha enviado un código de verificación a la dirección: %1$s</string>
     <string name="verificationCodeMailSubject">FasTEST | Tu código de verificación</string>
     <string name="verificationCodeMailBody">Hola!\n\nTu código de verificación es: %1$s</string>
+    <string name="lblResendVerificationBtn">Reenviar</string>
 
 </resources>

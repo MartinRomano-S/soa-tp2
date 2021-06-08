@@ -14,6 +14,9 @@ public class Configuration {
     public static final int COMMISSION = 3900;
     public static final int GROUP = 4;
 
+    public static final String VERIFICATION_EMAIL = "fastestappsoa@gmail.com";
+    public static final String VERIFICATION_PASSWORD = "prueba123";
+
     public static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
     public static final int REQUEST_READ_TIMEOUT = 10000;
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
