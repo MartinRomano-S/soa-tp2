@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
         try {
             boolean success = msg.getBoolean("success");
             if(success){
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent i = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(i);
             }
         } catch (JSONException e) {
