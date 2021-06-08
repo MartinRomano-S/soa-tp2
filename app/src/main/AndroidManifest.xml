@@ -3,6 +3,8 @@
     package="com.example.testlogin" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -17,6 +19,9 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TwoFactorActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
