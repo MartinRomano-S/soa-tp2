@@ -5,15 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.testlogin.interfaces.AsyncronableRequest;
 import com.example.testlogin.services.AsyncRequestService;
+import com.example.testlogin.utils.BatteryReceiver;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
     EditText txtUser;
     EditText txtPasswordLogin;
     ProgressBar prgLogin;
+    private BatteryReceiver batteryReceiver = new BatteryReceiver();
+    private IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,18 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(batteryReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(batteryReceiver, intentFilter);
     }
 
     @Override
