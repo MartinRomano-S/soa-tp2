@@ -41,4 +41,10 @@
     <string name="verificationCodeMailBody">Hola!\n\nTu código de verificación es: %1$s</string>
     <string name="lblResendVerificationBtn">Reenviar</string>
 
+    <!-- TEXTOS TEST -->
+    <string name="si">SI</string>
+    <string name="no">NO</string>
+    <string name="test_de_autodiagnostico">Test de autodiagnóstico</string>
+    <string name="testPregunta1">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
+    <string name="consultar">Consultar</string>
 </resources>
