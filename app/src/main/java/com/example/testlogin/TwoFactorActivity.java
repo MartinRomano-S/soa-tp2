@@ -24,7 +24,9 @@ import com.example.testlogin.utils.Configuration;
 public class TwoFactorActivity extends AppCompatActivity {
 
     Button btnCancel;
+    Button btnResendVerificationCode;
     TextView txtLblVerificationCode;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +35,10 @@ public class TwoFactorActivity extends AppCompatActivity {
 
         btnCancel = findViewById(R.id.btnCancelVerification);
         txtLblVerificationCode = findViewById(R.id.lblVerificationCodeSent);
+        btnResendVerificationCode = findViewById(R.id.btnResendVerification);
 
         Intent i = getIntent();
-        String email = i.getStringExtra("email");
+        email = i.getStringExtra("email");
 
         txtLblVerificationCode.setText(getString(R.string.lblVerificationCodeSent, email));
 
@@ -45,6 +48,12 @@ public class TwoFactorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        btnResendVerificationCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendEmailVerificationCode(email);
             }
         });
     }

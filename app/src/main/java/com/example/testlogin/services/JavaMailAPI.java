@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.testlogin.utils.Configuration;
+
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -17,7 +19,6 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     private Context mContext;
-    private Session mSession;
 
     private String mEmail;
     private String mSubject;
@@ -25,7 +26,6 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 
     private ProgressDialog mProgressDialog;
 
-    //Constructor
     public JavaMailAPI(Context mContext, String mEmail, String mSubject, String mMessage) {
         this.mContext = mContext;
         this.mEmail = mEmail;
@@ -36,76 +36,41 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //Show progress dialog while sending email
         mProgressDialog = ProgressDialog.show(mContext,"Sending message", "Please wait...",false,false);
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //Dismiss progress dialog when message successfully send
         mProgressDialog.dismiss();
-
-        //Show success toast
         Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        //Creating properties
-        Properties props = new Properties();
 
-        //Configuring properties for gmail
-        //If you are not using gmail you may need to change the values
+        Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        //Creating a new session
-        mSession = Session.getDefaultInstance(props,
+        Session mSession = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     //Authenticating the password
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("fastestappsoa@gmail.com", "prueba123");
+                        return new PasswordAuthentication(Configuration.VERIFICATION_EMAIL, Configuration.VERIFICATION_PASSWORD);
                     }
                 });
 
         try {
-            //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(mSession);
-
-            //Setting sender address
-            mm.setFrom(new InternetAddress("tinjunior1997@gmail.com"));
-            //Adding receiver
+            mm.setFrom(new InternetAddress(Configuration.VERIFICATION_EMAIL));
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(mEmail));
-            //Adding subject
             mm.setSubject(mSubject);
-            //Adding message
             mm.setText(mMessage);
-            //Sending email
             Transport.send(mm);
-
-//            BodyPart messageBodyPart = new MimeBodyPart();
-//
-//            messageBodyPart.setText(message);
-//
-//            Multipart multipart = new MimeMultipart();
-//
-//            multipart.addBodyPart(messageBodyPart);
-//
-//            messageBodyPart = new MimeBodyPart();
-//
-//            DataSource source = new FileDataSource(filePath);
-//
-//            messageBodyPart.setDataHandler(new DataHandler(source));
-//
-//            messageBodyPart.setFileName(filePath);
-//
-//            multipart.addBodyPart(messageBodyPart);
-
-//            mm.setContent(multipart);
 
         } catch (MessagingException e) {
             e.printStackTrace();
