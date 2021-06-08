@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestLogin</string>
+    <string name="app_name">FasTEST-App</string>
 
     <!-- ENDPOINTS API SOA -->
     <string name="api_base_url">http://so-unlam.net.ar/api/api/</string>
