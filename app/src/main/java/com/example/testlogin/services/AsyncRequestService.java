@@ -19,13 +19,16 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Clase genérica para gestionar request en una tarea en segundo plano
+ */
 public class AsyncRequestService extends AsyncTask<String, Void, JSONObject> {
 
     private AsyncronableRequest asyncActivityUI;
     private String endpoint;
     private SOAAPIallowedMethodsEnum method;
     private JSONObject data;
-    private final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
+    private static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
 
     public AsyncRequestService(AsyncronableRequest asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
         this.asyncActivityUI = asyncActivityUI;

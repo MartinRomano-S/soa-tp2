@@ -1,6 +1,10 @@
 package com.example.testlogin.models;
 
-public class User {
+import com.example.testlogin.interfaces.JSONable;
+
+import org.json.JSONObject;
+
+public class User implements JSONable {
     private String name;
     private String lastname;
     private Integer dni;
@@ -8,6 +12,8 @@ public class User {
     private String password;
     private Integer commision;
     private Integer group;
+
+    public User(){}
 
     public User(String name, String lastname, Integer dni, String email, String password) {
         this.name = name;
@@ -57,5 +63,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return null;
     }
 }

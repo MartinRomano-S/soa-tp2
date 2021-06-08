@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.testlogin.interfaces.AsyncronableRequest;
+import com.example.testlogin.models.Credentials;
+import com.example.testlogin.models.User;
 import com.example.testlogin.services.AsyncRequestService;
 import com.example.testlogin.utils.BatteryReceiver;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
@@ -44,14 +47,12 @@ public class LoginActivity extends AppCompatActivity implements AsyncronableRequ
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            JSONObject json = new JSONObject();
-            try {
-                json.put("email", txtUser.getText().toString());
-                json.put("password", txtPasswordLogin.getText().toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            AsyncRequestService asyncRequestService = new AsyncRequestService(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, json);
+
+            Credentials credentials = new Credentials();
+            credentials.setEmail(txtUser.getText().toString());
+            credentials.setPassword(txtPasswordLogin.getText().toString());
+
+            AsyncRequestService asyncRequestService = new AsyncRequestService(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, credentials.toJSON());
             asyncRequestService.execute();
             }
         });
