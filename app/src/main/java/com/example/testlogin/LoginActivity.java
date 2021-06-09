@@ -9,13 +9,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
@@ -73,8 +71,9 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         btnToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(i);
+                //Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent i = new Intent(LoginActivity.this, TestActivity.class);
+                startActivity(i);
             }
         });
     }
