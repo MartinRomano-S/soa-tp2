@@ -30,7 +30,12 @@
     <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
     <string name="aceptar">Aceptar</string>
 
-    <!-- ERRORES -->
+    <!-- ERRORES UI -->
+    <string name="errorInvalidMail">Debe ingresarse un mail válido</string>
+    <string name="errorPasswordLength">La contraseña debe contener al menos %1$d caracteres</string>
+    <string name="errorDNI">El DNI ingresado no es válido</string>
+    <string name="errorEmptyField">El campo no puede estar vacío</string>
+    <string name="errorInvalidVerificationCode">El código ingresado es incorrecto</string>
     <string name="titleError">Error</string>
     <string name="requestError">Se produjo un error al enviar la petición</string>
     <string name="credentialsError">El usuario o contraseña ingresado es incorrecto.</string>
@@ -42,6 +47,9 @@
     <string name="verificationCodeMailSubject">FasTEST | Tu código de verificación</string>
     <string name="verificationCodeMailBody">Hola!\n\nTu código de verificación es: %1$s</string>
     <string name="lblResendVerificationBtn">Reenviar</string>
+    
+    <!-- SHARED PREFERENCES -->
+    <string name="currentVerificationCode">currentVerificationCode</string>
 
     <!-- TEXTOS TEST -->
     <string name="si">SI</string>
@@ -51,6 +59,7 @@
     <string name="temperaturaDefault">36.0</string>
     <string name="testPreguntaOlfato">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
     <string name="consultar">Consultar</string>
+    <string name="dniPattern">[0-9]</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="testPreguntaGusto">¿Percibiste una marcada pérdida del gusto (sabor de los alimentos) de manera repentina?</string>

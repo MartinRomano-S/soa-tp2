@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -28,7 +30,9 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
     Button btnCancel;
     Button btnResendVerificationCode;
+    Button btnVerify;
     TextView txtLblVerificationCode;
+    EditText txtVerificationCode;
     ProgressBar pgbVerify;
     String email;
 
@@ -39,8 +43,10 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         btnCancel = findViewById(R.id.btnCancelVerification);
         txtLblVerificationCode = findViewById(R.id.lblVerificationCodeSent);
+        txtVerificationCode = findViewById(R.id.txtVerificationCode);
         btnResendVerificationCode = findViewById(R.id.btnResendVerification);
         pgbVerify = findViewById(R.id.pgbVerify);
+        btnVerify = findViewById(R.id.btnVerify);
 
         Intent i = getIntent();
         email = i.getStringExtra("email");
@@ -61,6 +67,22 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
                 sendEmailVerificationCode(email);
             }
         });
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String inputCode = txtVerificationCode.getText().toString();
+
+                if(inputCode.length() > 0 && inputCode.equals(Configuration.getCurrentVerificationCode(TwoFactorActivity.this))) {
+                    Intent i = new Intent(TwoFactorActivity.this, TestActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                } else
+                    txtVerificationCode.setError(getString(R.string.errorInvalidVerificationCode));
+            }
+        });
+
     }
 
     public void sendSMSVerificationCode() {
@@ -69,6 +91,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         if(Configuration.checkPermission(this, Manifest.permission.SEND_SMS)) {
             String messageToSend = Configuration.generateRandomCode();
+            Configuration.setCurrentVerificationCode(this, messageToSend);
             String number = "5491157582119";
 
             SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
@@ -77,7 +100,9 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
     public void sendEmailVerificationCode(String email) {
 
-        AsyncMailSending asyncMailSending = new AsyncMailSending(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, Configuration.generateRandomCode()));
+        String generatedCode = Configuration.generateRandomCode();
+        Configuration.setCurrentVerificationCode(this, generatedCode);
+        AsyncMailSending asyncMailSending = new AsyncMailSending(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, generatedCode));
         asyncMailSending.execute();
     }
 
@@ -93,6 +118,6 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
     @Override
     public void afterRequest(String response) {
-
+        Toast.makeText(this, Configuration.getCurrentVerificationCode(this), Toast.LENGTH_SHORT).show();
     }
 }

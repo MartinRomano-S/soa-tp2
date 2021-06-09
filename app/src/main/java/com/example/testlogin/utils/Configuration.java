@@ -1,8 +1,10 @@
 package com.example.testlogin.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -30,6 +32,8 @@ public class Configuration {
     public static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
     public static final int REQUEST_READ_TIMEOUT = 10000;
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
+    public static final int MINIMUM_PASSWORD_LENGTH = 8;
+    public static final int MAX_DNI_LENGTH = 8;
 
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
@@ -69,5 +73,17 @@ public class Configuration {
     public static String generateRandomCode() {
         SecureRandom random = new SecureRandom();
         return new BigInteger(30, random).toString(32);
+    }
+
+    public static void setCurrentVerificationCode(Activity activity, String currentVerificationCode) {
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        sharedPrefEditor.putString(activity.getString(R.string.currentVerificationCode), currentVerificationCode);
+        sharedPrefEditor.apply();
+    }
+
+    public static String getCurrentVerificationCode(Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPreferences.getString(activity.getString(R.string.currentVerificationCode), "");
     }
 }

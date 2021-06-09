@@ -7,12 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
@@ -23,6 +24,9 @@ import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
@@ -61,6 +65,8 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
                 Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.networkError));
             }
         });
+
+        addTextChangedListeners();
 
         btnToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,5 +128,33 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             });
             dialog.create().show();
         }
+    }
+
+    private void addTextChangedListeners() {
+        txtUser.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                String txtValue = txtUser.getText().toString();
+                Pattern p = Patterns.EMAIL_ADDRESS;
+                Matcher m = p.matcher(txtValue);
+
+                if(!m.matches())
+                    txtUser.setError(getString(R.string.errorInvalidMail));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        txtPasswordLogin.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if(s.length() < Configuration.MINIMUM_PASSWORD_LENGTH)
+                    txtPasswordLogin.setError(getString(R.string.errorPasswordLength, Configuration.MINIMUM_PASSWORD_LENGTH));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
     }
 }
