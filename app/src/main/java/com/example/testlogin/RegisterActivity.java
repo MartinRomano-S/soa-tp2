@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +22,9 @@ import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
@@ -44,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
         txtDNI = findViewById(R.id.txtDNI);
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
+
+        addTextChangedListeners();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,5 +111,75 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             }
         });
         dialog.create().show();
+    }
+
+    private void addTextChangedListeners() {
+
+        txtName.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                String txtValue = txtName.getText().toString();
+
+                if(txtValue.length() == 0)
+                    txtName.setError(getString(R.string.errorEmptyField));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        txtLastname.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                String txtValue = txtLastname.getText().toString();
+
+                if(txtValue.length() == 0)
+                    txtLastname.setError(getString(R.string.errorEmptyField));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        txtDNI.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                String txtValue = txtDNI.getText().toString();
+                Pattern p = Pattern.compile(getString(R.string.dniPattern));
+                Matcher m = p.matcher(txtValue);
+
+                if(!m.matches() || txtValue.length() > Configuration.MAX_DNI_LENGTH)
+                    txtDNI.setError(getString(R.string.errorDNI));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        txtEmail.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                String txtValue = txtEmail.getText().toString();
+                Pattern p = Patterns.EMAIL_ADDRESS;
+                Matcher m = p.matcher(txtValue);
+
+                if(!m.matches() || txtValue.length() > Configuration.MAX_DNI_LENGTH)
+                    txtEmail.setError(getString(R.string.errorInvalidMail));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        txtPassword.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if(s.length() < 8)
+                    txtPassword.setError(getString(R.string.errorPasswordLength, Configuration.MINIMUM_PASSWORD_LENGTH));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
     }
 }

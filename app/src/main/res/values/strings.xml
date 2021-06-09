@@ -29,6 +29,12 @@
     <string name="lblVerify">Verificar</string>
     <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
 
+    <!-- ERRORES UI -->
+    <string name="errorInvalidMail">Debe ingresarse un mail válido</string>
+    <string name="errorPasswordLength">La contraseña debe contener al menos %1$d caracteres</string>
+    <string name="errorDNI">El DNI ingresado no es válido</string>
+    <string name="errorEmptyField">El campo no puede estar vacío</string>
+
     <!-- ERRORES -->
     <string name="titleError">Error</string>
     <string name="requestError">Se produjo un error al enviar la petición</string>
@@ -48,4 +54,5 @@
     <string name="test_de_autodiagnostico">Test de autodiagnóstico</string>
     <string name="testPregunta1">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
     <string name="consultar">Consultar</string>
+    <string name="dniPattern">[0-9]</string>
 </resources>

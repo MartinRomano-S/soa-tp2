@@ -30,6 +30,8 @@ public class Configuration {
     public static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
     public static final int REQUEST_READ_TIMEOUT = 10000;
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
+    public static final int MINIMUM_PASSWORD_LENGTH = 8;
+    public static final int MAX_DNI_LENGTH = 8;
 
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
