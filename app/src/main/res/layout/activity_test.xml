@@ -57,27 +57,27 @@
             android:orientation="horizontal">
 
           <Button
-              android:id="@+id/fiebreMinusButton"
+              android:id="@+id/temperaturaMenos"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/minus"></Button>
 
           <TextView
-              android:id="@+id/gradosFiebre"
+              android:id="@+id/temperaturaCorporal"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/activity_horizontal_margin"
               android:layout_marginTop="16dp"
               android:text="@string/temperaturaDefault"
-              app:layout_constraintStart_toEndOf="@+id/fiebreMinusButton" />
+              app:layout_constraintStart_toEndOf="@+id/temperaturaMenos" />
 
           <Button
-              android:id="@+id/fiebrePlusButton"
+              android:id="@+id/temperaturaMas"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="16dp"
               android:text="@string/plus"
-              app:layout_constraintStart_toEndOf="@+id/gradosFiebre"></Button>
+              app:layout_constraintStart_toEndOf="@+id/temperaturaCorporal"></Button>
 
         </LinearLayout>
 

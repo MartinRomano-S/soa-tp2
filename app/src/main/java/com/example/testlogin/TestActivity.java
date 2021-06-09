@@ -9,23 +9,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testlogin.models.TestAnswers;
 import com.example.testlogin.services.TestResolver;
+import com.example.testlogin.utils.Constantes;
 
 public class TestActivity extends AppCompatActivity {
 
     RadioGroup grupoRespuestaOlfato, grupoRespuestaGusto, grupoRespuestaTos, grupoRespuestaDolorGarganta, grupoRespuestaDificultarRespiratoria, grupoRespuestaDolorCabeza, grupoRespuestaDiarrea, grupoRespuestaVomitos, grupoRespuestaDolorMuscular;
-    Button botonEnviarTest;
+    Button botonEnviarTest, botonAumentarTemperatura, botonDisminuirTemperatura;
     TestAnswers testAnswers;
     AlertDialog.Builder builder;
+    TextView textTemperaturaCorporal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        textTemperaturaCorporal = findViewById(R.id.temperaturaCorporal);
+        botonAumentarTemperatura = findViewById(R.id.temperaturaMas);
+        botonDisminuirTemperatura = findViewById(R.id.temperaturaMenos);
         grupoRespuestaOlfato = findViewById(R.id.radioGroupOlfato);
         grupoRespuestaGusto = findViewById(R.id.radioGroupGusto);
         grupoRespuestaTos = findViewById(R.id.radioGroupTos);
@@ -63,7 +69,6 @@ public class TestActivity extends AppCompatActivity {
                                     dialog.cancel();
                                 }
                             });
-                    //Creating dialog box
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
@@ -73,9 +78,41 @@ public class TestActivity extends AppCompatActivity {
 
             }
         });
+
+        botonDisminuirTemperatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double temperaturaCorporal = Double.parseDouble(textTemperaturaCorporal.getText().toString());
+                temperaturaCorporal-=0.1;
+                if(temperaturaCorporal< Constantes.TEMPERATURA_MINIMA_CUERPO_HUMANO){
+                    Toast.makeText(getApplicationContext(),R.string.temperaturaMinimaAlcanzada,
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    temperaturaCorporal=Math.round(temperaturaCorporal * 10.0) / 10.0;
+                    textTemperaturaCorporal.setText(String.valueOf(temperaturaCorporal));
+                }
+            }
+        });
+
+        botonAumentarTemperatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double temperaturaCorporal = Double.parseDouble(textTemperaturaCorporal.getText().toString());
+                temperaturaCorporal+=0.1;
+                if(temperaturaCorporal> Constantes.TEMPERATURA_MAXIMA_CUERPO_HUMANO){
+                    Toast.makeText(getApplicationContext(),R.string.temperaturaMaximaAlcanzada,
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    temperaturaCorporal=Math.round(temperaturaCorporal * 10.0) / 10.0;
+                    textTemperaturaCorporal.setText(String.valueOf(temperaturaCorporal));
+                }
+
+            }
+        });
     }
 
     private void obtenerRespuestas(){
+        testAnswers.setTemperaturaCorporal(Double.parseDouble(textTemperaturaCorporal.getText().toString()));
         int radioId;
         RadioButton respuesta;
         radioId = grupoRespuestaOlfato.getCheckedRadioButtonId();

@@ -7,11 +7,13 @@ import org.json.JSONObject;
 
 public class TestAnswers implements JSONable {
 
+    double temperaturaCorporal;
     private boolean olfato, gusto, tos, dolorGarganta, dificultadRespiratoria, dolorCabeza, diarrea, vomitos, dolorMuscular;
 
     public TestAnswers(){}
 
-    public TestAnswers(boolean olfato, boolean gusto, boolean tos, boolean dolorGarganta, boolean dificultadRespiratoria, boolean dolorCabeza, boolean diarrea, boolean vomitos, boolean dolorMuscular) {
+    public TestAnswers(float temperaturaCorporal, boolean olfato, boolean gusto, boolean tos, boolean dolorGarganta, boolean dificultadRespiratoria, boolean dolorCabeza, boolean diarrea, boolean vomitos, boolean dolorMuscular) {
+        this.temperaturaCorporal=temperaturaCorporal;
         this.olfato = olfato;
         this.gusto = gusto;
         this.tos= tos;
@@ -21,6 +23,14 @@ public class TestAnswers implements JSONable {
         this.diarrea=diarrea;
         this.vomitos= vomitos;
         this.dolorMuscular=dolorMuscular;
+    }
+
+    public double getTemperaturaCorporal() {
+        return temperaturaCorporal;
+    }
+
+    public void setTemperaturaCorporal(double temperaturaCorporal) {
+        this.temperaturaCorporal = temperaturaCorporal;
     }
 
     public boolean isOlfato() {
