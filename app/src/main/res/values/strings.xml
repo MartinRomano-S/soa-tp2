@@ -28,6 +28,7 @@
     <string name="lblVerificationCode">Código de verificación</string>
     <string name="lblVerify">Verificar</string>
     <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
+    <string name="aceptar">Aceptar</string>
 
     <!-- ERRORES -->
     <string name="titleError">Error</string>
@@ -46,6 +47,22 @@
     <string name="si">SI</string>
     <string name="no">NO</string>
     <string name="test_de_autodiagnostico">Test de autodiagnóstico</string>
-    <string name="testPregunta1">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
+    <string name="testPreguntaFiebre">¿Cuál es tu temperatura corporal actual?</string>
+    <string name="temperaturaDefault">36°</string>
+    <string name="testPreguntaOlfato">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
     <string name="consultar">Consultar</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="testPreguntaGusto">¿Percibiste una marcada pérdida del gusto (sabor de los alimentos) de manera repentina?</string>
+    <string name="testPreguntaTos">¿Tenés tos?</string>
+    <string name="testPreguntaDolorGarganta">¿Tenés dolor de garganta?</string>
+    <string name="testPreguntaDificultadRespiratoria">¿Tenés dificultad respiratoria o falta de aire?</string>
+    <string name="testPreguntaDolorCabeza">¿Tenés dolor de cabeza?</string>
+    <string name="testPreguntaDiarrea">¿Tenés diarrea?</string>
+    <string name="testPreguntaVomitos">¿Tenés vómitos?</string>
+    <string name="testPreguntaDolorMuscular">¿Tenés dolor muscular?</string>
+    <string name="sinSintomas">No tenés síntomas compatibles con COVID.</string>
+    <string name="resultadoTest">Resultado FasTEST</string>
+    <string name="volverAlTest">Volver al test</string>
+
 </resources>

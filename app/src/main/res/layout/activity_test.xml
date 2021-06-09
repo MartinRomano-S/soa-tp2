@@ -10,51 +10,392 @@
       android:id="@+id/testTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="56dp"
-      android:layout_marginBottom="656dp"
+      android:layout_marginTop="16dp"
       android:text="@string/test_de_autodiagnostico"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
-  <TextView
-      android:id="@+id/preguntaTos"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/activity_horizontal_margin"
-      android:text="@string/testPregunta1"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toEndOf="@+id/testTitle"
+  <ScrollView
+      android:id="@+id/scrollView"
+      android:layout_width="411dp"
+      android:layout_height="590dp"
+      android:fillViewport="true"
+      tools:layout_editor_absoluteY="61dp"
+      app:layout_constraintTop_toBottomOf="@id/testTitle"
+      app:layout_constraintBottom_toTopOf="@id/testConsultar"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/testTitle" />
+      >
 
-  <RadioGroup
-      android:id="@+id/radioGroupTos"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/activity_vertical_margin"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/preguntaTos">
-
-    <RadioButton
-        android:id="@+id/radioTosSi"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/si"></RadioButton>
+        android:orientation="vertical">
 
-    <RadioButton
-        android:id="@+id/radioTosNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no"
-        android:checked="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        ></RadioButton>
+      <TextView
+          android:id="@+id/preguntaFiebre"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaFiebre"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/testTitle" />
 
-  </RadioGroup>
+      <RelativeLayout
+          android:id="@+id/layoutFiebre"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaFiebre">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+          <Button
+              android:id="@+id/fiebreMinusButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/minus"></Button>
+
+          <TextView
+              android:id="@+id/gradosFiebre"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/activity_horizontal_margin"
+              android:layout_marginTop="16dp"
+              android:text="@string/temperaturaDefault"
+              app:layout_constraintStart_toEndOf="@+id/fiebreMinusButton" />
+
+          <Button
+              android:id="@+id/fiebrePlusButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="16dp"
+              android:text="@string/plus"
+              app:layout_constraintStart_toEndOf="@+id/gradosFiebre"></Button>
+
+        </LinearLayout>
+
+      </RelativeLayout>
+
+
+      <TextView
+          android:id="@+id/preguntaOlfato"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaOlfato"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toEndOf="@+id/testTitle"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/layoutFiebre" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupOlfato"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaOlfato">
+
+        <RadioButton
+            android:id="@+id/radioOlfatoSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioOlfatoNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaGusto"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaGusto"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupOlfato" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupGusto"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaGusto">
+
+        <RadioButton
+            android:id="@+id/radioGustoSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioGustoNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaTos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaTos"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupGusto" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupTos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaTos">
+
+        <RadioButton
+            android:id="@+id/radioTosSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioTosNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaDolorGarganta"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaDolorGarganta"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupTos" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupDolorGarganta"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaDolorGarganta">
+
+        <RadioButton
+            android:id="@+id/radioDolorGargantaSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioDolorGargantaNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaDificultadRespiratoria"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaDificultadRespiratoria"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupDolorGarganta" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupDificultadRespiratoria"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaDificultadRespiratoria">
+
+        <RadioButton
+            android:id="@+id/radioDificultadRespiratoriaSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioDificultadRespiratoriaNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaDolorCabeza"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaDolorCabeza"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupDificultadRespiratoria" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupDolorCabeza"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaDolorCabeza">
+
+        <RadioButton
+            android:id="@+id/radioDolorCabezaSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioDolorCabezaNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaDiarrea"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaDiarrea"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupDolorCabeza" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupDiarrea"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaDiarrea">
+
+        <RadioButton
+            android:id="@+id/radioDiarreaSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioDiarreaNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaVomitos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaVomitos"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupDiarrea" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupVomitos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaVomitos">
+
+        <RadioButton
+            android:id="@+id/radioVomitosSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioVomitosNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+      <TextView
+          android:id="@+id/preguntaDolorMuscular"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/testPreguntaDolorMuscular"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/radioGroupVomitos" />
+
+      <RadioGroup
+          android:id="@+id/radioGroupDolorMuscular"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/preguntaDolorMuscular">
+
+        <RadioButton
+            android:id="@+id/radioDolorMuscularSi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/si"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioDolorMuscularNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no"
+            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+
+      </RadioGroup>
+
+    </LinearLayout>
+
+  </ScrollView>
+
 
   <Button
       android:id="@+id/testConsultar"
