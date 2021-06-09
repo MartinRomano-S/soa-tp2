@@ -33,6 +33,7 @@
     <string name="titleError">Error</string>
     <string name="requestError">Se produjo un error al enviar la petición</string>
     <string name="credentialsError">El usuario o contraseña ingresado es incorrecto.</string>
+    <string name="networkError">El dispositivo no se encuentra conectado a la red.</string>
     <string name="acceptButton">Aceptar</string>
 
     <!-- TEXTOS EMAIL -->

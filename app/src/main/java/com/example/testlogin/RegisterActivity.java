@@ -14,6 +14,7 @@ import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
 import com.example.testlogin.models.User;
 import com.example.testlogin.services.AsyncHttpRequest;
+import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -48,14 +49,18 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             @Override
             public void onClick(View view) {
 
+                //TODO VALIDACIÓN DE DATOS
                 User user = new User();
                 user.setCredentials(new Credentials(txtEmail.getText().toString(), txtPassword.getText().toString()));
                 user.setDni(Integer.valueOf(txtDNI.getText().toString()));
                 user.setName(txtName.getText().toString());
                 user.setLastname(txtLastname.getText().toString());
 
-                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
-                asyncHttpRequest.execute();
+                if(Configuration.isNetworkConnected(RegisterActivity.this)) {
+                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
+                    asyncHttpRequest.execute();
+                } else
+                    Configuration.showModalMessage(RegisterActivity.this, getString(R.string.titleError), getString(R.string.networkError));
             }
         });
 

@@ -7,15 +7,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
 import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.BatteryReceiver;
+import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 
 import org.json.JSONException;
@@ -51,8 +54,11 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             credentials.setEmail(txtUser.getText().toString());
             credentials.setPassword(txtPasswordLogin.getText().toString());
 
-            AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, credentials.toJSON());
-            asyncHttpRequest.execute();
+            if(Configuration.isNetworkConnected(LoginActivity.this)) {
+                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, credentials.toJSON());
+                asyncHttpRequest.execute();
+            } else
+                Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.networkError));
             }
         });
 

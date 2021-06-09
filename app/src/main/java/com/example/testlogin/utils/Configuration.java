@@ -1,9 +1,19 @@
 package com.example.testlogin.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.testlogin.R;
+
+import org.json.JSONException;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -24,6 +34,36 @@ public class Configuration {
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
         return (check == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public static boolean isNetworkConnected(Context c) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(connectivityManager != null) {
+            Network network = connectivityManager.getActiveNetwork();
+
+            if (network == null) return false;
+
+            NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
+            return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                    || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+        }
+        return false;
+    }
+
+    public static void showModalMessage(Context c, String title, String msg) {
+        AlertDialog.Builder dialog;
+        dialog = new AlertDialog.Builder(c);
+        dialog.setTitle(title);
+        dialog.setMessage(msg);
+
+        dialog.setPositiveButton(c.getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+
+        dialog.create().show();
     }
 
     public static String generateRandomCode() {
