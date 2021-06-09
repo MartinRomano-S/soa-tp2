@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         txtPasswordLogin.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                if(s.length() < 8)
+                if(s.length() < Configuration.MINIMUM_PASSWORD_LENGTH)
                     txtPasswordLogin.setError(getString(R.string.errorPasswordLength, Configuration.MINIMUM_PASSWORD_LENGTH));
             }
 

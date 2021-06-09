@@ -35,8 +35,7 @@
     <string name="errorPasswordLength">La contraseña debe contener al menos %1$d caracteres</string>
     <string name="errorDNI">El DNI ingresado no es válido</string>
     <string name="errorEmptyField">El campo no puede estar vacío</string>
-
-    <!-- ERRORES -->
+    <string name="errorInvalidVerificationCode">El código ingresado es incorrecto</string>
     <string name="titleError">Error</string>
     <string name="requestError">Se produjo un error al enviar la petición</string>
     <string name="credentialsError">El usuario o contraseña ingresado es incorrecto.</string>
@@ -48,6 +47,9 @@
     <string name="verificationCodeMailSubject">FasTEST | Tu código de verificación</string>
     <string name="verificationCodeMailBody">Hola!\n\nTu código de verificación es: %1$s</string>
     <string name="lblResendVerificationBtn">Reenviar</string>
+    
+    <!-- SHARED PREFERENCES -->
+    <string name="currentVerificationCode">currentVerificationCode</string>
 
     <!-- TEXTOS TEST -->
     <string name="si">SI</string>
