@@ -1,5 +1,6 @@
 package com.example.testlogin.services;
 
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 
 import com.example.testlogin.interfaces.Asyncronable;
@@ -50,11 +51,12 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
             URL url = new URL(endpoint);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             addHeaders(urlConnection);
-            urlConnection.connect();
 
             out = new BufferedOutputStream(urlConnection.getOutputStream());
+
             writeRequest(out);
-            out.close();
+            out.flush();
+            urlConnection.connect();
 
             int status = urlConnection.getResponseCode();
 
@@ -65,6 +67,8 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
 
             JSONObject response = readResponse(in);
             in.close();
+            out.close();
+            urlConnection.disconnect();
 
             return response;
         } catch (Exception e) {

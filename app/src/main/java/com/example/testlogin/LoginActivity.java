@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         btnToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                Intent i = new Intent(LoginActivity.this, TestActivity.class);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                //Intent i = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(i);
             }
         });
