@@ -73,7 +73,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
                 String inputCode = txtVerificationCode.getText().toString();
 
                 if(inputCode.length() > 0 && inputCode.equals(Configuration.getCurrentVerificationCode(TwoFactorActivity.this))) {
-                    Intent i = new Intent(TwoFactorActivity.this, TestActivity.class);
+                    Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
