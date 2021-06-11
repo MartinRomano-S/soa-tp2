@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.testlogin.interfaces.Asyncronable;
+import com.example.testlogin.interfaces.Inputable;
 import com.example.testlogin.models.Credentials;
 import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.BatteryReceiver;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
+public class LoginActivity extends AppCompatActivity implements Asyncronable<JSONObject>, Inputable {
 
     Button btnLogin;
     Button btnToRegister;
@@ -130,7 +131,8 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         }
     }
 
-    private void addTextChangedListeners() {
+    @Override
+    public void addTextChangedListeners() {
         txtUser.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {

@@ -75,5 +75,6 @@
     <string name="volverAlTest">Volver al test</string>
     <string name="temperaturaMaximaAlcanzada">Temperatura máxima alcanzada</string>
     <string name="temperaturaMinimaAlcanzada">Temperatura mínima alcanzada</string>
+    <string name="errorPhoneNumberFormat">El número de teléfono debe empezar con 11 ó 15 y contener 10 dígitos</string>
 
 </resources>
