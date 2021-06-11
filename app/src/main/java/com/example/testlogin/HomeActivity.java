@@ -32,8 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         btnGoToEmergencyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO IR A EMERGENCY CONTACT
-                startActivity(new Intent(HomeActivity.this, TestActivity.class));
+                startActivity(new Intent(HomeActivity.this, EmergencyContactsActivity.class));
             }
         });
 

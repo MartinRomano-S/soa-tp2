@@ -72,14 +72,22 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
             public void onClick(View view) {
                 String inputCode = txtVerificationCode.getText().toString();
 
-                if(inputCode.length() > 0 && inputCode.equals(Configuration.getCurrentVerificationCode(TwoFactorActivity.this))) {
+                //TODO QUITAR ESTE BLOQUE Y DESCOMENTAR EL DE ABAJO
+                Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+
+                //TODO QUITAR BLOQUE DE ARRIBA Y DESCOMENTAR ESTE BLOQUE
+                /*if(inputCode.length() > 0 && inputCode.equals(Configuration.getCurrentVerificationCode(TwoFactorActivity.this))) {
                     Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                 } else
-                    txtVerificationCode.setError(getString(R.string.errorInvalidVerificationCode));
+                    txtVerificationCode.setError(getString(R.string.errorInvalidVerificationCode));*/
             }
         });
 
