@@ -1,10 +1,18 @@
 package com.example.testlogin.models;
 
-public class EmergencyContact {
+import com.example.testlogin.interfaces.JSONable;
+import com.example.testlogin.utils.Configuration;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class EmergencyContact implements JSONable {
 
     private int id;
     private String name;
     private int phoneNumber;
+
+    public EmergencyContact() {}
 
     public EmergencyContact(int id, String name, int phoneNumber) {
         this.id = id;
@@ -34,5 +42,31 @@ public class EmergencyContact {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("id", getId());
+            json.put("name", getName());
+            json.put("phoneNumber", getPhoneNumber());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    @Override
+    public void getFromJSON(JSONObject jsonObject) {
+        try {
+            setId(jsonObject.getInt("id"));
+            setName(jsonObject.getString("name"));
+            setPhoneNumber(jsonObject.getInt("phoneNumber"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

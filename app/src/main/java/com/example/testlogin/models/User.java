@@ -69,4 +69,9 @@ public class User implements JSONable {
 
         return json;
     }
+
+    @Override
+    public void getFromJSON(JSONObject jsonObject) {
+
+    }
 }

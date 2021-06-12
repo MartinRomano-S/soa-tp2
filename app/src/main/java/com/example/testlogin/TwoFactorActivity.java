@@ -1,7 +1,6 @@
 package com.example.testlogin;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -18,8 +17,6 @@ import androidx.core.app.ActivityCompat;
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.services.AsyncMailSending;
 import com.example.testlogin.utils.Configuration;
-
-import org.json.JSONObject;
 
 /**
  * EXPERIMENTAL
@@ -53,7 +50,8 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         txtLblVerificationCode.setText(getString(R.string.lblVerificationCodeSent, email));
 
-        sendEmailVerificationCode(email);
+        //TODO DESCOMENTAR ESTA LINEA
+        //sendEmailVerificationCode(email);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +97,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         if(Configuration.checkPermission(this, Manifest.permission.SEND_SMS)) {
             String messageToSend = Configuration.generateRandomCode();
-            Configuration.setCurrentVerificationCode(this, messageToSend);
+            Configuration.saveCurrentVerificationCode(this, messageToSend);
             String number = "5491157582119";
 
             SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
@@ -109,7 +107,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
     public void sendEmailVerificationCode(String email) {
 
         String generatedCode = Configuration.generateRandomCode();
-        Configuration.setCurrentVerificationCode(this, generatedCode);
+        Configuration.saveCurrentVerificationCode(this, generatedCode);
         AsyncMailSending asyncMailSending = new AsyncMailSending(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, generatedCode));
         asyncMailSending.execute();
     }

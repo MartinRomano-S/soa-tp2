@@ -9,16 +9,20 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.testlogin.R;
+import com.example.testlogin.models.EmergencyContact;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Configuration {
 
@@ -34,6 +38,7 @@ public class Configuration {
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
     public static final int MINIMUM_PASSWORD_LENGTH = 8;
     public static final int MAX_DNI_LENGTH = 8;
+    public static final String DNI_PATTERN = "[0-9]";
 
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
@@ -75,7 +80,7 @@ public class Configuration {
         return new BigInteger(30, random).toString(32);
     }
 
-    public static void setCurrentVerificationCode(Activity activity, String currentVerificationCode) {
+    public static void saveCurrentVerificationCode(Activity activity, String currentVerificationCode) {
         SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
         sharedPrefEditor.putString(activity.getString(R.string.currentVerificationCode), currentVerificationCode);
@@ -85,5 +90,42 @@ public class Configuration {
     public static String getCurrentVerificationCode(Activity activity) {
         SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
         return sharedPreferences.getString(activity.getString(R.string.currentVerificationCode), "");
+    }
+
+    public static void saveEmergencyContactList(Activity activity, List<EmergencyContact> emergencyContactList) {
+
+        JSONArray jsonArray = new JSONArray();
+
+        for(EmergencyContact ec : emergencyContactList) {
+            jsonArray.put(ec.toJSON());
+        }
+
+        Log.i("JSON CONVERSION", jsonArray.toString());
+
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        sharedPrefEditor.putString("emergencyContacts", jsonArray.toString());
+        sharedPrefEditor.apply();
+    }
+
+    public static List<EmergencyContact> getEmergencyContactList(Activity activity) throws JSONException {
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        JSONArray jsonArray = new JSONArray(sharedPreferences.getString("emergencyContacts", new JSONArray().toString()));
+        List<EmergencyContact> list = new ArrayList<>();
+
+        for(int i = 0; i < jsonArray.length(); i++) {
+            EmergencyContact ec = new EmergencyContact();
+            ec.getFromJSON(jsonArray.getJSONObject(i));
+            list.add(ec);
+        }
+
+        return list;
+    }
+
+    public static void removeEmergencyContactList(Activity activity) {
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        sharedPrefEditor.remove("emergencyContacts");
+        sharedPrefEditor.apply();
     }
 }

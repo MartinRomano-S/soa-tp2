@@ -46,4 +46,9 @@ public class Credentials implements JSONable {
 
         return json;
     }
+
+    @Override
+    public void getFromJSON(JSONObject jsonObject) {
+
+    }
 }

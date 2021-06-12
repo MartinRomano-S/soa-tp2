@@ -127,6 +127,11 @@ public class TestAnswers implements JSONable {
         return json;
     }
 
+    @Override
+    public void getFromJSON(JSONObject jsonObject) {
+
+    }
+
     public boolean convertAnswerToBool(CharSequence answer){
         if ("SI".equals(answer)) {
             return true;
