@@ -1,28 +1,30 @@
 package com.example.testlogin;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.testlogin.utils.Constantes;
+import com.example.testlogin.utils.PhoneCaller;
+
 public class TestResultActivity extends AppCompatActivity {
 
     Button botonLlamar, botonMensajear, botonVolverAHome;
-    private Context mContext=TestResultActivity.this;
-
-    private static final int REQUEST = 112;
+    SensorManager sensorManager;
+    Sensor proximitySensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,57 +45,50 @@ public class TestResultActivity extends AppCompatActivity {
         botonLlamar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "1121891188"));
-                //startActivity(call);
-
-                if (Build.VERSION.SDK_INT >= 23) {
-                    String[] PERMISSIONS = {android.Manifest.permission.CALL_PHONE};
-                    if (!hasPermissions(mContext, PERMISSIONS)) {
-                        ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS, REQUEST );
-                    } else {
-                        makeCall();
-                    }
-                } else {
-                    makeCall();
-                }
-
+                PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
             }
         });
 
+        // Invoco al sensor service
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        // Desde el sensor service llamo al sensor de proximidad
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+        // Si el teléfono no tiene sensor de proximidad
+        if (proximitySensor == null) {
+            Toast.makeText(this, "El teléfono no cuenta con sensor de proximidad.", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            // Registro el sensor con el sensor manager
+            sensorManager.registerListener(proximitySensorEventListener,
+                    proximitySensor,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    makeCall();
-                } else {
-                    Toast.makeText(mContext, "The app was not allowed to call.", Toast.LENGTH_LONG).show();
+    //Llamo a la clase sensorEventListener para detectar cambio en el estado del sensor.
+    SensorEventListener proximitySensorEventListener = new SensorEventListener() {
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            // No hago nada
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            // Chequeo si el sensor de proximidad cambió.
+            if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+                if (event.values[0] == 0) {
+                    PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
                 }
             }
         }
-    }
+    };
 
-    private static boolean hasPermissions(Context context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
-    public void makeCall()
-    {
-        Toast.makeText(mContext, "SE SUPONE QUE ESTOY LLAMANDO", Toast.LENGTH_LONG).show();
-        String number="1121891188";
-        Intent intent4=new Intent(Intent.ACTION_CALL);
-        intent4.setData(Uri.parse("tel:"+number));
-        startActivity(intent4);
-    }
+
+
 
 }
