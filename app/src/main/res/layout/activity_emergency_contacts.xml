@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="whatever"
+        android:text="@string/contactFormTitle"
         android:background="@drawable/abm_form_title"
         android:gravity="center"
         android:textColor="@color/colorPrimaryLight"
@@ -58,7 +58,7 @@
             android:background="@drawable/edit_text"
             android:ems="10"
             android:maxLength="10"
-            android:hint="whatever"
+            android:hint="@string/hintECNumber"
             android:importantForAutofill="no"
             android:inputType="phone"
             android:paddingStart="20dp"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_primary"
-            android:text="whatever"
+            android:text="@string/addContactButton"
             android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="whatever"
+        android:text="@string/helpEmergencyContact"
         android:textSize="16sp"
         android:gravity="center_horizontal"/>
 
@@ -95,7 +95,7 @@
         android:id="@+id/emergencyContactListTitle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="whatever"
+        android:text="@string/titleContactList"
         android:background="@drawable/abm_form_title"
         android:gravity="center"
         android:textColor="@color/colorPrimaryLight"
@@ -116,6 +116,5 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"/>
 </LinearLayout>

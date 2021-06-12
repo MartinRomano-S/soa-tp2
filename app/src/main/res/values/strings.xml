@@ -28,6 +28,8 @@
     <string name="lblVerificationCode">Código de verificación</string>
     <string name="lblVerify">Verificar</string>
     <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
+    <string name="hintECNumber">Teléfono (xxxxxxxxxx)</string>
+    <string name="addContactButton">Agregar contacto</string>
     <string name="aceptar">Aceptar</string>
     <string name="acceptButton">Aceptar</string>
     <string name="deleteButton">Eliminar</string>
