@@ -145,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
 
             public void afterTextChanged(Editable s) {
                 String txtValue = txtDNI.getText().toString();
-                Pattern p = Pattern.compile(getString(R.string.dniPattern));
+                Pattern p = Pattern.compile(Configuration.DNI_PATTERN);
                 Matcher m = p.matcher(txtValue);
 
                 if(!m.matches() || txtValue.length() > Configuration.MAX_DNI_LENGTH)

@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             }
         });
 
-        addTextChangedListeners();
+        addInputChangedListeners();
 
         btnToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
     }
 
     @Override
-    public void addTextChangedListeners() {
+    public void addInputChangedListeners() {
         txtUser.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
