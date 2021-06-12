@@ -29,6 +29,13 @@
     <string name="lblVerify">Verificar</string>
     <string name="lblResendVerificationCode">En caso de no haber recibido \nel código haga click en reenviar</string>
     <string name="aceptar">Aceptar</string>
+    <string name="acceptButton">Aceptar</string>
+    <string name="deleteButton">Eliminar</string>
+
+    <!-- EMERGENCY CONTACTS -->
+    <string name="helpEmergencyContact">Los contactos de emergencia serán notificados por SMS en caso de presentar síntomas</string>
+    <string name="titleContactList">Listado de contactos de emergencia</string>
+    <string name="contactFormTitle">Nuevo contacto de emergencia</string>
 
     <!-- ERRORES UI -->
     <string name="errorInvalidMail">Debe ingresarse un mail válido</string>
@@ -40,7 +47,6 @@
     <string name="requestError">Se produjo un error al enviar la petición</string>
     <string name="credentialsError">El usuario o contraseña ingresado es incorrecto.</string>
     <string name="networkError">El dispositivo no se encuentra conectado a la red.</string>
-    <string name="acceptButton">Aceptar</string>
 
     <!-- TEXTOS EMAIL -->
     <string name="lblVerificationCodeSent">Se ha enviado un código de verificación a la dirección: %1$s</string>
@@ -59,7 +65,6 @@
     <string name="temperaturaDefault">36.0</string>
     <string name="testPreguntaOlfato">¿Percibiste una marcada pérdida del olfato de manera repentina?</string>
     <string name="consultar">Consultar</string>
-    <string name="dniPattern">[0-9]</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="testPreguntaGusto">¿Percibiste una marcada pérdida del gusto (sabor de los alimentos) de manera repentina?</string>
