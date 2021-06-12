@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -120,6 +121,18 @@ public class Configuration {
         }
 
         return list;
+    }
+
+    public static void sendMessageToEmergencyContactList(Activity activity) throws JSONException{
+        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+        JSONArray jsonArray = new JSONArray(sharedPreferences.getString("emergencyContacts", new JSONArray().toString()));
+        Toast.makeText(activity, "Contacts: "+jsonArray.length(), Toast.LENGTH_SHORT).show();
+
+        for(int i = 0; i < jsonArray.length(); i++) {
+            EmergencyContact ec = new EmergencyContact();
+            ec.getFromJSON(jsonArray.getJSONObject(i));
+            Toast.makeText(activity, "Nombre: "+ec.getName()+" Tel: "+ec.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void removeEmergencyContactList(Activity activity) {

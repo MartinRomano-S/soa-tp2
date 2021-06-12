@@ -1,24 +1,23 @@
 package com.example.testlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.Constantes;
 import com.example.testlogin.utils.PhoneCaller;
+
+import org.json.JSONException;
 
 public class TestResultActivity extends AppCompatActivity {
 
@@ -30,6 +29,8 @@ public class TestResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_result);
+
+
 
         botonLlamar = findViewById(R.id.botonLlamarAtencionCovid);
         botonMensajear = findViewById(R.id.botonMensajearCovid);
@@ -46,6 +47,17 @@ public class TestResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
+            }
+        });
+
+        botonMensajear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Configuration.sendMessageToEmergencyContactList(TestResultActivity.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
