@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.interfaces.Inputable;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
     EditText txtPasswordLogin;
     Credentials credentials;
     ProgressBar prgLogin;
+    TextView btnSkipLogin;
     private BatteryReceiver batteryReceiver = new BatteryReceiver();
     private IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
@@ -50,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         txtUser = findViewById(R.id.txtUser);
         txtPasswordLogin = findViewById(R.id.txtPasswordLogin);
         prgLogin = findViewById(R.id.pgbLogin);
+        btnSkipLogin = findViewById(R.id.skipLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,14 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 //Intent i = new Intent(LoginActivity.this, TestActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnSkipLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(i);
             }
         });

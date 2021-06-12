@@ -47,7 +47,7 @@
     <string name="verificationCodeMailSubject">FasTEST | Tu código de verificación</string>
     <string name="verificationCodeMailBody">Hola!\n\nTu código de verificación es: %1$s</string>
     <string name="lblResendVerificationBtn">Reenviar</string>
-    
+
     <!-- SHARED PREFERENCES -->
     <string name="currentVerificationCode">currentVerificationCode</string>
 
@@ -76,5 +76,14 @@
     <string name="temperaturaMaximaAlcanzada">Temperatura máxima alcanzada</string>
     <string name="temperaturaMinimaAlcanzada">Temperatura mínima alcanzada</string>
     <string name="errorPhoneNumberFormat">El número de teléfono debe empezar con 11 ó 15 y contener 10 dígitos</string>
+
+    <!-- TEXTOS RESULTADO -->
+    <string name="resultadoSintomasCompatibles">Presentás síntomas compatibles con COVID.</string>
+    <string name="covidLlamar">Para comunicarte con una línea de atención COVID, presioná el botón o acercá el teléfono a tu oído.</string>
+    <string name="covidMensajear">Para avisar a tus contactos de emergencia, presioná el botón o agitá tu teléfono.</string>
+    <string name="covidLlamarBoton">Llamar</string>
+    <string name="covidMensajearBoton">Enviar mensaje</string>
+    <string name="botonVolverAHome">Volver a la home</string>
+    <string name="iconoAlertText">Icono de alerta</string>
 
 </resources>

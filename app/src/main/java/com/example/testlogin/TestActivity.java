@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,8 +55,8 @@ public class TestActivity extends AppCompatActivity {
                 boolean testResult=testResolver.resolve();
 
                 if(testResult){
-                    Toast.makeText(getApplicationContext(),"Acá debería llevarte a otra activity.",
-                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(TestActivity.this, TestResultActivity.class));
+
                 }else{
                     builder.setMessage(R.string.sinSintomas) .setTitle(R.string.resultadoTest);
                     builder.setCancelable(false)
