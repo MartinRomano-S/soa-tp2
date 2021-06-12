@@ -22,6 +22,9 @@
             android:name=".TestActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".EventsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".EmergencyContactsActivity"
             android:screenOrientation="portrait" />
         <activity
