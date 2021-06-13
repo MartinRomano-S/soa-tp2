@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.testlogin.R;
+import com.example.testlogin.TestResultActivity;
 import com.example.testlogin.models.EmergencyContact;
 
 import org.json.JSONArray;
@@ -42,6 +43,7 @@ public class Configuration {
     public static final int MINIMUM_PASSWORD_LENGTH = 8;
     public static final int MAX_DNI_LENGTH = 8;
     public static final String DNI_PATTERN = "[0-9]";
+    public static final int TOKEN_REFRESH_TIME = 28;
 
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
@@ -81,5 +83,9 @@ public class Configuration {
     public static String generateRandomCode() {
         SecureRandom random = new SecureRandom();
         return new BigInteger(30, random).toString(32);
+    }
+
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.equals("") || s.isEmpty();
     }
 }

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -64,15 +65,22 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             @Override
             public void onClick(View view) {
 
-            credentials = new Credentials();
-            credentials.setEmail(txtUser.getText().toString());
-            credentials.setPassword(txtPasswordLogin.getText().toString());
+                String txtUserVal = txtUser.getText().toString();
+                String txtPasswordVal = txtPasswordLogin.getText().toString();
 
-            if(Configuration.isNetworkConnected(LoginActivity.this)) {
-                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, null, credentials.toJSON());
-                asyncHttpRequest.execute();
-            } else
-                Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.networkError));
+                if (!Configuration.isNullOrEmpty(txtUserVal) && !Configuration.isNullOrEmpty(txtPasswordVal)) {
+
+                    credentials = new Credentials();
+                    credentials.setEmail(txtUserVal);
+                    credentials.setPassword(txtPasswordVal);
+
+                    if (Configuration.isNetworkConnected(LoginActivity.this)) {
+                        AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, null, credentials.toJSON());
+                        asyncHttpRequest.execute();
+                    } else
+                        Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.networkError));
+                } else
+                    Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.someEmptyField));
             }
         });
 
@@ -110,11 +118,13 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
 
     @Override
     public void showProgress(String msg) {
+        toggleClicks(false);
         prgLogin.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
+        toggleClicks(true);
         prgLogin.setVisibility(View.GONE);
     }
 
@@ -184,5 +194,14 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+    }
+
+    public void toggleClicks(boolean status) {
+        btnLogin.setClickable(status);
+        btnToRegister.setClickable(status);
+        txtUser.setEnabled(status);
+        txtPasswordLogin.setEnabled(status);
+        btnLogin.setClickable(status);
+        btnSkipLogin.setClickable(status);
     }
 }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Event;
+import com.example.testlogin.models.Token;
 import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.services.ShakeDetector;
 import com.example.testlogin.utils.Configuration;
@@ -38,7 +39,9 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
     Sensor proximitySensor, mAccelerometer;
     private ShakeDetector mShakeDetector;
     SharedPreferencesManager spm;
-
+    Token token;
+    boolean tokenWasInvalid;
+    Event pendingEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,12 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
         botonVolverAHome = findViewById(R.id.botonVolverAHome);
 
         spm = SharedPreferencesManager.getInstance(TestResultActivity.this);
+
+        try {
+            token = spm.getTokenInfo();
+        } catch (JSONException e) {
+            token = null;
+        }
 
         if(!Configuration.checkPermission(this, Manifest.permission.CALL_PHONE))
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CALL_PHONE}, 1);
@@ -108,15 +117,29 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
             // SHAKE
 
             // ShakeDetector initialization
-            mAccelerometer = sensorManager
-                    .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mShakeDetector = new ShakeDetector();
             mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
 
                 @Override
                 public void onShake(int count) {
                     try {
-                        SharedPreferencesManager spm = SharedPreferencesManager.getInstance(TestResultActivity.this);
+
+                        Event eventInfo = new Event();
+                        eventInfo.setEventDate(new Date());
+                        eventInfo.setDescription("Se ha activado el acelerómetro.");
+                        eventInfo.setType(Constantes.EVENT_TYPES.SHAKE.toString());
+
+                        try {
+                            spm.saveEvent(eventInfo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        pendingEvent = eventInfo;
+                        registerEvent();
+
                         spm.sendMessageToEmergencyContactList(TestResultActivity.this);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -124,6 +147,22 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
                 }
             });
         }
+    }
+
+    private boolean isTokenValid(Token token) throws JSONException {
+
+        if(token == null) return false;
+
+        token = spm.getTokenInfo();
+        Date emmitedDate = token.getEmmitedDate();
+
+        if(emmitedDate == null) return false;
+
+        Date todayNow = new Date();
+        long diff = todayNow.getTime() - emmitedDate.getTime();
+        long diffMinutes = diff / (60 * 1000) % 60;
+
+        return diffMinutes < Configuration.TOKEN_REFRESH_TIME;
     }
 
     @Override
@@ -164,8 +203,10 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
                         e.printStackTrace();
                     }
 
-                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_event_url), SOAAPIallowedMethodsEnum.POST, null, eventInfo.toJSON());
-                    asyncHttpRequest.execute();
+                    if(Configuration.isNetworkConnected(TestResultActivity.this)) {
+                        AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_event_url), SOAAPIallowedMethodsEnum.POST, null, eventInfo.toJSON());
+                        asyncHttpRequest.execute();
+                    }
 
                     PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
                 }
@@ -180,5 +221,57 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
     public void hideProgress() {}
 
     @Override
-    public void afterRequest(JSONObject response) {}
+    public void afterRequest(JSONObject response) {
+
+        boolean success;
+
+        try {
+            success = response.getBoolean("success");
+
+        } catch (JSONException e) {
+            success = false;
+        }
+
+        if(success && tokenWasInvalid) {
+            tokenWasInvalid = false;
+
+            String newToken;
+            String newTokenRefresh;
+
+            try {
+                newToken = response.getString("token");
+                newTokenRefresh = response.getString("token_refresh");
+
+                token = new Token(newToken, newTokenRefresh, new Date());
+                spm.saveTokenInfo(token);
+                registerEvent();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        if(success)
+            Toast.makeText(this, "Evento registrado", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Evento NO registrado", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public synchronized void registerEvent() throws JSONException {
+
+        if(Configuration.isNetworkConnected(TestResultActivity.this)) {
+
+            //Si el token está vencido hay que pedir uno nuevo
+            tokenWasInvalid = !isTokenValid(token);
+
+            if(tokenWasInvalid) {
+                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_refresh_url), SOAAPIallowedMethodsEnum.PUT, token.getRefreshToken(), null);
+                asyncHttpRequest.execute();
+            } else {
+                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_event_url), SOAAPIallowedMethodsEnum.POST, token.getActiveToken(), pendingEvent.toJSON());
+                asyncHttpRequest.execute();
+            }
+        }
+    }
 }

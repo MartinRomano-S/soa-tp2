@@ -2,6 +2,7 @@ package com.example.testlogin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -53,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 SharedPreferencesManager spm = SharedPreferencesManager.getInstance(HomeActivity.this);
                 spm.delete();
-                startActivity(new Intent(HomeActivity.this, EmergencyContactsActivity.class));
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
         });
     }

@@ -67,7 +67,7 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
             else
                 in = urlConnection.getErrorStream();
 
-            JSONObject response = readResponse(in);
+            JSONObject response = readResponse(in, status);
             in.close();
             out.close();
             urlConnection.disconnect();
@@ -98,11 +98,13 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
     }
 
     private void writeRequest(OutputStream out) throws IOException {
-        byte[] input = data.toString().getBytes(StandardCharsets.UTF_8);
-        out.write(input, 0, input.length);
+        if(data != null) {
+            byte[] input = data.toString().getBytes(StandardCharsets.UTF_8);
+            out.write(input, 0, input.length);
+        }
     }
 
-    private JSONObject readResponse(InputStream in) throws IOException, JSONException {
+    private JSONObject readResponse(InputStream in, int status) throws IOException, JSONException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         StringBuilder builder = new StringBuilder();
         String line;
@@ -111,6 +113,9 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
             builder.append(line);
 
         reader.close();
-        return new JSONObject(builder.toString());
+
+        JSONObject response = new JSONObject(builder.toString());
+        response.put("status", status);
+        return response;
     }
 }

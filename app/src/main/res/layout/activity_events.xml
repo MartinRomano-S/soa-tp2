@@ -11,7 +11,7 @@
         android:id="@+id/eventListTitle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="whatever"
+        android:text="@string/titleEventList"
         android:background="@drawable/abm_form_title"
         android:gravity="center"
         android:textColor="@color/colorPrimaryLight"

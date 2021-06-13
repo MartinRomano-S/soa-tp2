@@ -63,18 +63,26 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             @Override
             public void onClick(View view) {
 
-                //TODO VALIDACIÓN DE DATOS
-                user = new User();
-                user.setCredentials(new Credentials(txtEmail.getText().toString(), txtPassword.getText().toString()));
-                user.setDni(Integer.valueOf(txtDNI.getText().toString()));
-                user.setName(txtName.getText().toString());
-                user.setLastname(txtLastname.getText().toString());
+                String txtEmailVal = txtEmail.getText().toString();
+                String txtPasswordVal = txtPassword.getText().toString();
+                String txtDNIVal = txtDNI.getText().toString();
+                String txtNameVal = txtName.getText().toString();
+                String txtLastnameVal = txtLastname.getText().toString();
 
-                if(Configuration.isNetworkConnected(RegisterActivity.this)) {
-                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, null, user.toJSON());
-                    asyncHttpRequest.execute();
-                } else
-                    Configuration.showModalMessage(RegisterActivity.this, getString(R.string.titleError), getString(R.string.networkError));
+                if (!Configuration.isNullOrEmpty(txtEmailVal) && !Configuration.isNullOrEmpty(txtPasswordVal) && !Configuration.isNullOrEmpty(txtDNIVal) && !Configuration.isNullOrEmpty(txtNameVal) && !Configuration.isNullOrEmpty(txtLastnameVal)) {
+
+                    user = new User();
+                    user.setCredentials(new Credentials(txtEmailVal, txtPasswordVal));
+                    user.setDni(Integer.valueOf(txtDNIVal));
+                    user.setName(txtNameVal);
+                    user.setLastname(txtLastnameVal);
+
+                    if (Configuration.isNetworkConnected(RegisterActivity.this)) {
+                        AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, null, user.toJSON());
+                        asyncHttpRequest.execute();
+                    } else
+                        Configuration.showModalMessage(RegisterActivity.this, getString(R.string.titleError), getString(R.string.networkError));
+                }
             }
         });
 
@@ -88,11 +96,13 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
 
     @Override
     public void showProgress(String msg) {
+        toggleClicks(false);
         pgbRegister.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
+        toggleClicks(true);
         pgbRegister.setVisibility(View.GONE);
     }
 
@@ -221,5 +231,15 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+    }
+
+    public void toggleClicks(boolean status) {
+        btnCancel.setClickable(status);
+        btnRegister.setClickable(status);
+        txtName.setEnabled(status);
+        txtLastname.setEnabled(status);
+        txtDNI.setEnabled(status);
+        txtEmail.setEnabled(status);
+        txtPassword.setEnabled(status);
     }
 }

@@ -33,6 +33,7 @@
     <string name="aceptar">Aceptar</string>
     <string name="acceptButton">Aceptar</string>
     <string name="deleteButton">Eliminar</string>
+    <string name="titleEventList">Listado de eventos</string>
 
     <!-- EMERGENCY CONTACTS -->
     <string name="helpEmergencyContact">Los contactos de emergencia serán notificados por SMS en caso de presentar síntomas</string>
@@ -49,6 +50,7 @@
     <string name="requestError">Se produjo un error al enviar la petición</string>
     <string name="credentialsError">El usuario o contraseña ingresado es incorrecto.</string>
     <string name="networkError">El dispositivo no se encuentra conectado a la red.</string>
+    <string name="someEmptyField">Algún campo está vacio o incorrecto</string>
 
     <!-- TEXTOS EMAIL -->
     <string name="lblVerificationCodeSent">Se ha enviado un código de verificación a la dirección: %1$s</string>
