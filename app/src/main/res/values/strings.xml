@@ -92,5 +92,6 @@
     <string name="covidMensajearBoton">Enviar mensaje</string>
     <string name="botonVolverAHome">Volver a la home</string>
     <string name="iconoAlertText">Icono de alerta</string>
+    <string name="smsMessage">¡Hola! Tengo síntomas compatibles con COVID.</string>
 
 </resources>
