@@ -19,14 +19,17 @@ import android.widget.TextView;
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.interfaces.Inputable;
 import com.example.testlogin.models.Credentials;
+import com.example.testlogin.models.Token;
 import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.BatteryReceiver;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
+import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +57,9 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         prgLogin = findViewById(R.id.pgbLogin);
         btnSkipLogin = findViewById(R.id.skipLogin);
 
+        SharedPreferencesManager spm = SharedPreferencesManager.getInstance(this);
+        spm.delete();
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
             credentials.setPassword(txtPasswordLogin.getText().toString());
 
             if(Configuration.isNetworkConnected(LoginActivity.this)) {
-                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, credentials.toJSON());
+                AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(LoginActivity.this, getString(R.string.api_login_url), SOAAPIallowedMethodsEnum.POST, null, credentials.toJSON());
                 asyncHttpRequest.execute();
             } else
                 Configuration.showModalMessage(LoginActivity.this, getString(R.string.titleError), getString(R.string.networkError));
@@ -116,17 +122,26 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
     public void afterRequest(JSONObject response) {
 
         String msg = getString(R.string.credentialsError);
-        boolean success = false;
+        boolean success;
+        String currentToken = "";
+        String tokenRefresh = "";
 
         try {
             success = response.getBoolean("success");
+            currentToken = response.getString("token");
+            tokenRefresh = response.getString("token_refresh");
+
         } catch (JSONException e) {
             msg = getString(R.string.requestError);
+            success = false;
         }
 
         if(success) {
             Intent i = new Intent(LoginActivity.this, TwoFactorActivity.class);
             i.putExtra("email", credentials.getEmail());
+
+            SharedPreferencesManager spm = SharedPreferencesManager.getInstance(LoginActivity.this);
+            spm.saveTokenInfo(new Token(currentToken, tokenRefresh, new Date()));
 
             startActivity(i);
         } else {

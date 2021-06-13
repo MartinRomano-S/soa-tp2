@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,14 +16,17 @@ import android.widget.ProgressBar;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.models.Credentials;
+import com.example.testlogin.models.Token;
 import com.example.testlogin.models.User;
 import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
+import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
     EditText txtDNI;
     EditText txtEmail;
     EditText txtPassword;
+    User user;
+    Token token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +64,14 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             public void onClick(View view) {
 
                 //TODO VALIDACIÓN DE DATOS
-                User user = new User();
+                user = new User();
                 user.setCredentials(new Credentials(txtEmail.getText().toString(), txtPassword.getText().toString()));
                 user.setDni(Integer.valueOf(txtDNI.getText().toString()));
                 user.setName(txtName.getText().toString());
                 user.setLastname(txtLastname.getText().toString());
 
                 if(Configuration.isNetworkConnected(RegisterActivity.this)) {
-                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, user.toJSON());
+                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(RegisterActivity.this, getString(R.string.api_register_url), SOAAPIallowedMethodsEnum.POST, null, user.toJSON());
                     asyncHttpRequest.execute();
                 } else
                     Configuration.showModalMessage(RegisterActivity.this, getString(R.string.titleError), getString(R.string.networkError));
@@ -93,24 +99,58 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
     @Override
     public void afterRequest(JSONObject response){
 
-        //TODO
-        //Agregar lógica para ir a login o a twoFactor. Ver manejo de token
         AlertDialog.Builder dialog;
         dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Bienvenido");
         dialog.setMessage("");
-        try {
-            dialog.setMessage("Success: " + response.getString("success") + "\nToken: " + response.getString("token"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        dialog.create().show();
+        String msg = getString(R.string.credentialsError);
+        boolean success;
+        String currentToken = "";
+        String tokenRefresh = "";
+
+        try {
+            success = response.getBoolean("success");
+            currentToken = response.getString("token");
+            tokenRefresh = response.getString("token_refresh");
+
+        } catch (JSONException e) {
+            msg = getString(R.string.requestError);
+            success = false;
+        }
+
+        if(success) {
+
+            token = new Token(currentToken, tokenRefresh, new Date());
+            dialog.setMessage("Usuario registrado correctamente");
+            dialog.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    Intent intent = new Intent(RegisterActivity.this, TwoFactorActivity.class);
+                    Credentials credentials = user.getCredentials();
+                    intent.putExtra("email", credentials.getEmail());
+
+                    SharedPreferencesManager spm = SharedPreferencesManager.getInstance(RegisterActivity.this);
+                    spm.saveTokenInfo(token);
+
+                    startActivity(intent);
+
+                }
+            });
+
+            dialog.create().show();
+        } else {
+            dialog.setTitle(getString(R.string.titleError));
+            dialog.setMessage(msg);
+            dialog.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+            dialog.create().show();
+        }
+
+
     }
 
     private void addTextChangedListeners() {

@@ -19,6 +19,8 @@ import com.example.testlogin.services.AsyncMailSending;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
+import org.json.JSONException;
+
 import java.util.Date;
 
 /**
@@ -51,6 +53,11 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         spm = SharedPreferencesManager.getInstance(this);
 
+        try {
+            Toast.makeText(this, spm.getTokenInfo().toJSON().toString(), Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Intent i = getIntent();
         email = i.getStringExtra("email");
 
@@ -76,24 +83,19 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
             public void onClick(View view) {
                 String inputCode = txtVerificationCode.getText().toString();
 
-                spm.saveLastLoginDate(new Date().getTime());
-
-                //TODO QUITAR ESTE BLOQUE Y DESCOMENTAR EL DE ABAJO
-                Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                //TODO QUITAR ESTA VARIABLE
+                boolean enabled = false;
 
                 //TODO QUITAR BLOQUE DE ARRIBA Y DESCOMENTAR ESTE BLOQUE
-                /*if(inputCode.length() > 0 && inputCode.equals(Configuration.getCurrentVerificationCode(TwoFactorActivity.this))) {
+                if(!enabled || (inputCode.length() > 0 && inputCode.equals(spm.getCurrentVerificationCode()))) {
+                    spm.saveLastLoginDate(new Date().getTime());
                     Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                 } else
-                    txtVerificationCode.setError(getString(R.string.errorInvalidVerificationCode));*/
+                    txtVerificationCode.setError(getString(R.string.errorInvalidVerificationCode));
             }
         });
 

@@ -14,6 +14,7 @@ import com.example.testlogin.adapters.EventsListAdapter;
 import com.example.testlogin.models.EmergencyContact;
 import com.example.testlogin.models.Event;
 import com.example.testlogin.utils.Configuration;
+import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 
@@ -26,6 +27,7 @@ public class EventsActivity extends AppCompatActivity {
 
     RecyclerView listEvents;
     List<Event> events;
+    SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +35,22 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
 
         listEvents = findViewById(R.id.listEvents);
+        spm = SharedPreferencesManager.getInstance(EventsActivity.this);
 
         listEvents.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         divider.setDrawable(Objects.requireNonNull(getDrawable(R.drawable.divider)));
         listEvents.addItemDecoration(divider);
-        events = new ArrayList<>();
+
+        try {
+            events = spm.getEventList();
+        } catch (JSONException e) {
+            events = new ArrayList<>();
+        }
 
         events.add(new Event(new Date(), "Shake", "Desc 1"));
         events.add(new Event(new Date(), "Shake", "Desc 2"));
-        events.add(new Event(new Date(), "Shake", "Desc 3"));
-        events.add(new Event(new Date(), "Shake", "Desc 4"));
-        events.add(new Event(new Date(), "Shake", "Desc 5"));
         //Configuration.removeEmergencyContactList(this);
-
-
 
         EventsListAdapter evAdapter = new EventsListAdapter(events);
         listEvents.setAdapter(evAdapter);

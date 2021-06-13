@@ -9,9 +9,12 @@ import android.widget.Toast;
 
 import com.example.testlogin.R;
 import com.example.testlogin.models.EmergencyContact;
+import com.example.testlogin.models.Event;
+import com.example.testlogin.models.Token;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ public class SharedPreferencesManager {
     private static final String SP_VERIFICATION_CODE = "currentVerificationCode";
     private static final String SP_EMERGENCY_CONTACT_LIST = "emergencyContacts";
     private static final String SP_LAST_LOGIN_DATE = "lastLoginDate";
+    private static final String SP_CURRENT_TOKEN_INFO = "currentTokenInfo";
+    private static final String SP_EVENT_LIST = "eventList";
 
     @SuppressLint("CommitPrefEdits")
     private SharedPreferencesManager(Context context) {
@@ -78,6 +83,49 @@ public class SharedPreferencesManager {
         }
 
         return list;
+    }
+
+    public synchronized void saveEvent(Event event) throws JSONException {
+
+        JSONArray jsonArray = new JSONArray();
+        List<Event> eventList = getEventList();
+
+        eventList.add(event);
+
+        for(Event ev : eventList)
+            jsonArray.put(ev.toJSON());
+
+        sharedPrefEditor.putString(SP_EVENT_LIST, jsonArray.toString());
+        sharedPrefEditor.apply();
+    }
+
+    public List<Event> getEventList() throws JSONException {
+        JSONArray jsonArray = new JSONArray(sharedPreferences.getString(SP_EVENT_LIST, new JSONArray().toString()));
+        List<Event> list = new ArrayList<>();
+
+        for(int i = 0; i < jsonArray.length(); i++) {
+            Event ev = new Event();
+            ev.getFromJSON(jsonArray.getJSONObject(i));
+            list.add(ev);
+        }
+
+        return list;
+    }
+
+    public synchronized void saveTokenInfo(Token token) {
+
+        JSONObject jsonObject = token.toJSON();
+
+        sharedPrefEditor.putString(SP_CURRENT_TOKEN_INFO, jsonObject.toString());
+        sharedPrefEditor.apply();
+    }
+
+    public Token getTokenInfo() throws JSONException {
+        JSONObject jsonObject = new JSONObject(sharedPreferences.getString(SP_CURRENT_TOKEN_INFO, SP_DEFAULT_VALUE));
+        Token token = new Token();
+        token.getFromJSON(jsonObject);
+
+        return token;
     }
 
     public void sendMessageToEmergencyContactList(Context context) throws JSONException{

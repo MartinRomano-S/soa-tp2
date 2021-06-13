@@ -1,6 +1,5 @@
 package com.example.testlogin.services;
 
-import android.hardware.SensorManager;
 import android.os.AsyncTask;
 
 import com.example.testlogin.interfaces.Asyncronable;
@@ -30,12 +29,14 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
     private String endpoint;
     private SOAAPIallowedMethodsEnum method;
     private JSONObject data;
+    private String token;
 
-    public AsyncHttpRequest(Asyncronable<JSONObject> asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, JSONObject data) {
+    public AsyncHttpRequest(Asyncronable<JSONObject> asyncActivityUI, String endpoint, SOAAPIallowedMethodsEnum method, String token, JSONObject data) {
         this.asyncActivityUI = asyncActivityUI;
         this.endpoint = Configuration.API_BASE_URL + endpoint;
         this.method = method;
         this.data = data;
+        this.token = token;
     }
 
     @Override
@@ -51,6 +52,7 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
             URL url = new URL(endpoint);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             addHeaders(urlConnection);
+
 
             out = new BufferedOutputStream(urlConnection.getOutputStream());
 
@@ -90,6 +92,9 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
         urlConnection.setRequestMethod(method.toString());
         urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");
         urlConnection.setRequestProperty("Accept", "application/json");
+
+        if(token != null)
+            urlConnection.setRequestProperty("Authorization", "Bearer " + token);
     }
 
     private void writeRequest(OutputStream out) throws IOException {

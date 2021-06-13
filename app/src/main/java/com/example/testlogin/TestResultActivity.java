@@ -16,29 +16,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.testlogin.interfaces.Asyncronable;
+import com.example.testlogin.models.Event;
+import com.example.testlogin.services.AsyncHttpRequest;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.Constantes;
 import com.example.testlogin.utils.PhoneCaller;
+import com.example.testlogin.utils.SOAAPIallowedMethodsEnum;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class TestResultActivity extends AppCompatActivity {
+import java.util.Date;
+
+public class TestResultActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
     Button botonLlamar, botonMensajear, botonVolverAHome;
     SensorManager sensorManager;
     Sensor proximitySensor;
+    SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_result);
 
-
-
         botonLlamar = findViewById(R.id.botonLlamarAtencionCovid);
         botonMensajear = findViewById(R.id.botonMensajearCovid);
         botonVolverAHome = findViewById(R.id.botonVolverAHome);
+
+        spm = SharedPreferencesManager.getInstance(TestResultActivity.this);
 
         if(!Configuration.checkPermission(this, Manifest.permission.CALL_PHONE))
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CALL_PHONE}, 1);
@@ -69,7 +77,6 @@ public class TestResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    SharedPreferencesManager spm = SharedPreferencesManager.getInstance(TestResultActivity.this);
                     spm.sendMessageToEmergencyContactList(TestResultActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -110,13 +117,32 @@ public class TestResultActivity extends AppCompatActivity {
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 if (event.values[0] == 0) {
 
-                    if(!Configuration.checkPermission(TestResultActivity.this, Manifest.permission.SEND_SMS))
-                        ActivityCompat.requestPermissions(TestResultActivity.this, new String[] {Manifest.permission.SEND_SMS}, 1);
+                    Event eventInfo = new Event();
+                    eventInfo.setEventDate(new Date());
+                    eventInfo.setDescription("Se ha activado el sensor de proximidad.");
+                    eventInfo.setType(Constantes.EVENT_TYPES.PROXIMITY.toString());
 
-                    if(Configuration.checkPermission(TestResultActivity.this, Manifest.permission.SEND_SMS))
-                        PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
+                    try {
+                        spm.saveEvent(eventInfo);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_event_url), SOAAPIallowedMethodsEnum.POST, null, eventInfo.toJSON());
+                    asyncHttpRequest.execute();
+
+                    PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
                 }
             }
         }
     };
+
+    @Override
+    public void showProgress(String msg) {}
+
+    @Override
+    public void hideProgress() {}
+
+    @Override
+    public void afterRequest(JSONObject response) {}
 }

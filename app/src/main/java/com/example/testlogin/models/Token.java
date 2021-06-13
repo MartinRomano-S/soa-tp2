@@ -1,15 +1,25 @@
 package com.example.testlogin.models;
 
-public class Token {
+import com.example.testlogin.interfaces.JSONable;
+import com.example.testlogin.utils.Configuration;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+
+public class Token implements JSONable {
 
     private String activeToken;
     private String refreshToken;
+    private Date emmitedDate;
 
     public Token() {}
 
-    public Token(String activeToken, String refreshToken) {
+    public Token(String activeToken, String refreshToken, Date emmitedDate) {
         this.activeToken = activeToken;
         this.refreshToken = refreshToken;
+        this.emmitedDate = emmitedDate;
     }
 
     public String getActiveToken() {
@@ -26,5 +36,39 @@ public class Token {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public Date getEmmitedDate() {
+        return emmitedDate;
+    }
+
+    public void setEmmitedDate(Date emmitedDate) {
+        this.emmitedDate = emmitedDate;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("activeToken", getActiveToken());
+            json.put("refreshToken", getRefreshToken());
+            json.put("emmitedDate", getEmmitedDate().getTime());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    @Override
+    public void getFromJSON(JSONObject jsonObject) {
+        try {
+            setActiveToken(jsonObject.getString("activeToken"));
+            setRefreshToken(jsonObject.getString("refreshToken"));
+            setEmmitedDate(new Date(jsonObject.getLong("emmitedDate")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
