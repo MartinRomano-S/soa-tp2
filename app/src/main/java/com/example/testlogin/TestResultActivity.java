@@ -35,9 +35,9 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
 
     Button botonLlamar, botonMensajear, botonVolverAHome;
     SensorManager sensorManager;
-    SharedPreferencesManager spm;
     Sensor proximitySensor, mAccelerometer;
     private ShakeDetector mShakeDetector;
+    SharedPreferencesManager spm;
 
 
     @Override
@@ -124,7 +124,6 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
                 }
             });
         }
-
     }
 
     @Override
