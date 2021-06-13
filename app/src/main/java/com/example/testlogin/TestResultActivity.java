@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.testlogin.services.ShakeDetector;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.Constantes;
 import com.example.testlogin.utils.PhoneCaller;
@@ -23,11 +24,15 @@ import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 
+import java.util.Objects;
+
 public class TestResultActivity extends AppCompatActivity {
 
     Button botonLlamar, botonMensajear, botonVolverAHome;
     SensorManager sensorManager;
-    Sensor proximitySensor;
+    Sensor proximitySensor, mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +100,39 @@ public class TestResultActivity extends AppCompatActivity {
                         SensorManager.SENSOR_DELAY_NORMAL);
             }
         }
+
+        // SHAKE
+
+        // ShakeDetector initialization
+        mAccelerometer = sensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                try {
+                    SharedPreferencesManager spm = SharedPreferencesManager.getInstance(TestResultActivity.this);
+                    spm.sendMessageToEmergencyContactList(TestResultActivity.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        sensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        sensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 
     //Llamo a la clase sensorEventListener para detectar cambio en el estado del sensor.

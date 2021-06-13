@@ -1,11 +1,15 @@
 package com.example.testlogin.utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.example.testlogin.R;
 import com.example.testlogin.models.EmergencyContact;
@@ -82,13 +86,14 @@ public class SharedPreferencesManager {
 
     public void sendMessageToEmergencyContactList(Context context) throws JSONException{
         JSONArray jsonArray = new JSONArray(sharedPreferences.getString(SP_EMERGENCY_CONTACT_LIST, new JSONArray().toString()));
-        Toast.makeText(context, "Contacts: "+jsonArray.length(), Toast.LENGTH_SHORT).show();
-
+        String message = context.getResources().getString(R.string.smsMessage);
         for(int i = 0; i < jsonArray.length(); i++) {
             EmergencyContact ec = new EmergencyContact();
             ec.getFromJSON(jsonArray.getJSONObject(i));
-            Toast.makeText(context, "Nombre: "+ec.getName()+" Tel: "+ec.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+            SMSSender.sendSMS("+549"+ec.getPhoneNumber(), message);
         }
+        Toast.makeText(context, "Mensaje enviado a "+jsonArray.length()+" contacto/s de emergencia.", Toast.LENGTH_SHORT).show();
+
     }
 
     public synchronized void saveLastLoginDate(long dateInMillis) {
