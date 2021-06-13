@@ -16,6 +16,7 @@ import com.example.testlogin.adapters.EmergencyContactsListAdapter;
 import com.example.testlogin.interfaces.Inputable;
 import com.example.testlogin.models.EmergencyContact;
 import com.example.testlogin.utils.Configuration;
+import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 
@@ -30,6 +31,7 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
     EditText txtECNumber;
     Button btnAddEmergencyContact;
     List<EmergencyContact> emergencyContacts;
+    SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
 
         addInputChangedListeners();
 
+        spm = SharedPreferencesManager.getInstance(this);
         listEmergencyContacts.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         divider.setDrawable(Objects.requireNonNull(getDrawable(R.drawable.divider)));
@@ -51,7 +54,7 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
         //Configuration.removeEmergencyContactList(this);
 
         try {
-            emergencyContacts = Configuration.getEmergencyContactList(this);
+            emergencyContacts = spm.getEmergencyContactList();
 
             if(emergencyContacts.isEmpty())
                 emergencyContacts = new ArrayList<>();
@@ -93,7 +96,7 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
 
                     emergencyContacts.add(ec);
 
-                    Configuration.saveEmergencyContactList(EmergencyContactsActivity.this, emergencyContacts);
+                    spm.saveEmergencyContactList(emergencyContacts);
 
                     refreshEmergencyContactList(emergencyContacts);
                 }

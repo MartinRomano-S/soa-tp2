@@ -17,6 +17,9 @@ import androidx.core.app.ActivityCompat;
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.services.AsyncMailSending;
 import com.example.testlogin.utils.Configuration;
+import com.example.testlogin.utils.SharedPreferencesManager;
+
+import java.util.Date;
 
 /**
  * EXPERIMENTAL
@@ -32,6 +35,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
     EditText txtVerificationCode;
     ProgressBar pgbVerify;
     String email;
+    SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
         btnResendVerificationCode = findViewById(R.id.btnResendVerification);
         pgbVerify = findViewById(R.id.pgbVerify);
         btnVerify = findViewById(R.id.btnVerify);
+
+        spm = SharedPreferencesManager.getInstance(this);
 
         Intent i = getIntent();
         email = i.getStringExtra("email");
@@ -69,6 +75,8 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
             @Override
             public void onClick(View view) {
                 String inputCode = txtVerificationCode.getText().toString();
+
+                spm.saveLastLoginDate(new Date().getTime());
 
                 //TODO QUITAR ESTE BLOQUE Y DESCOMENTAR EL DE ABAJO
                 Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
@@ -97,7 +105,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         if(Configuration.checkPermission(this, Manifest.permission.SEND_SMS)) {
             String messageToSend = Configuration.generateRandomCode();
-            Configuration.saveCurrentVerificationCode(this, messageToSend);
+            spm.saveCurrentVerificationCode(messageToSend);
             String number = "5491157582119";
 
             SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
@@ -107,7 +115,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
     public void sendEmailVerificationCode(String email) {
 
         String generatedCode = Configuration.generateRandomCode();
-        Configuration.saveCurrentVerificationCode(this, generatedCode);
+        spm.saveCurrentVerificationCode(generatedCode);
         AsyncMailSending asyncMailSending = new AsyncMailSending(this, email, getString(R.string.verificationCodeMailSubject), getString(R.string.verificationCodeMailBody, generatedCode));
         asyncMailSending.execute();
     }
@@ -124,6 +132,6 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
     @Override
     public void afterRequest(String response) {
-        Toast.makeText(this, Configuration.getCurrentVerificationCode(this), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, spm.getCurrentVerificationCode(), Toast.LENGTH_SHORT).show();
     }
 }

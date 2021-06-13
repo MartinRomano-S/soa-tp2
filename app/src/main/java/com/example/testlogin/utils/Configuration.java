@@ -1,5 +1,6 @@
 package com.example.testlogin.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.net.NetworkCapabilities;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.testlogin.R;
@@ -79,66 +81,5 @@ public class Configuration {
     public static String generateRandomCode() {
         SecureRandom random = new SecureRandom();
         return new BigInteger(30, random).toString(32);
-    }
-
-    public static void saveCurrentVerificationCode(Activity activity, String currentVerificationCode) {
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putString(activity.getString(R.string.currentVerificationCode), currentVerificationCode);
-        sharedPrefEditor.apply();
-    }
-
-    public static String getCurrentVerificationCode(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        return sharedPreferences.getString(activity.getString(R.string.currentVerificationCode), "");
-    }
-
-    public static void saveEmergencyContactList(Activity activity, List<EmergencyContact> emergencyContactList) {
-
-        JSONArray jsonArray = new JSONArray();
-
-        for(EmergencyContact ec : emergencyContactList) {
-            jsonArray.put(ec.toJSON());
-        }
-
-        Log.i("JSON CONVERSION", jsonArray.toString());
-
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putString("emergencyContacts", jsonArray.toString());
-        sharedPrefEditor.apply();
-    }
-
-    public static List<EmergencyContact> getEmergencyContactList(Activity activity) throws JSONException {
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        JSONArray jsonArray = new JSONArray(sharedPreferences.getString("emergencyContacts", new JSONArray().toString()));
-        List<EmergencyContact> list = new ArrayList<>();
-
-        for(int i = 0; i < jsonArray.length(); i++) {
-            EmergencyContact ec = new EmergencyContact();
-            ec.getFromJSON(jsonArray.getJSONObject(i));
-            list.add(ec);
-        }
-
-        return list;
-    }
-
-    public static void sendMessageToEmergencyContactList(Activity activity) throws JSONException{
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        JSONArray jsonArray = new JSONArray(sharedPreferences.getString("emergencyContacts", new JSONArray().toString()));
-        Toast.makeText(activity, "Contacts: "+jsonArray.length(), Toast.LENGTH_SHORT).show();
-
-        for(int i = 0; i < jsonArray.length(); i++) {
-            EmergencyContact ec = new EmergencyContact();
-            ec.getFromJSON(jsonArray.getJSONObject(i));
-            Toast.makeText(activity, "Nombre: "+ec.getName()+" Tel: "+ec.getPhoneNumber(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public static void removeEmergencyContactList(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.remove("emergencyContacts");
-        sharedPrefEditor.apply();
     }
 }

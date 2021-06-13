@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testlogin.R;
 import com.example.testlogin.models.EmergencyContact;
 import com.example.testlogin.utils.Configuration;
+import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,7 +89,8 @@ public class EmergencyContactsListAdapter extends RecyclerView.Adapter<Emergency
             public void onClick(View view) {
 
                 emergencyContacts.remove(emergencyContact);
-                Configuration.saveEmergencyContactList(callerActivity, emergencyContacts);
+                SharedPreferencesManager spm = SharedPreferencesManager.getInstance(callerActivity);
+                spm.saveEmergencyContactList(emergencyContacts);
                 notifyItemRemoved(position);
             }
         });
