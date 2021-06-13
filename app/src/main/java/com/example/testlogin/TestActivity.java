@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.example.testlogin.models.TestAnswers;
 import com.example.testlogin.services.TestResolver;
 import com.example.testlogin.utils.Constantes;
+import com.example.testlogin.utils.SharedPreferencesManager;
+
+import org.json.JSONException;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class TestActivity extends AppCompatActivity {
     TestAnswers testAnswers;
     AlertDialog.Builder builder;
     TextView textTemperaturaCorporal;
+    SharedPreferencesManager spm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class TestActivity extends AppCompatActivity {
         grupoRespuestaDolorMuscular = findViewById(R.id.radioGroupDolorMuscular);
         botonEnviarTest = findViewById(R.id.testConsultar);
 
+        spm = SharedPreferencesManager.getInstance(TestActivity.this);
+
         builder = new AlertDialog.Builder(this);
 
         botonEnviarTest.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +59,12 @@ public class TestActivity extends AppCompatActivity {
                 obtenerRespuestas(); //Lee las respuestas del formulario y las carga en testAnswers
                 TestResolver testResolver = new TestResolver(testAnswers);
                 boolean testResult=testResolver.resolve();
+
+                try {
+                    spm.saveLastTestResult(testResult);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 if(testResult){
                     startActivity(new Intent(TestActivity.this, TestResultActivity.class));
@@ -73,10 +85,6 @@ public class TestActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
-
-
-
-
             }
         });
 

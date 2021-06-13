@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class SharedPreferencesManager {
     private static final String SP_LAST_LOGIN_DATE = "lastLoginDate";
     private static final String SP_CURRENT_TOKEN_INFO = "currentTokenInfo";
     private static final String SP_EVENT_LIST = "eventList";
+    private static final String SP_LAST_TEST_RESULT = "lastTestResultObj";
 
     @SuppressLint("CommitPrefEdits")
     private SharedPreferencesManager(Context context) {
@@ -130,6 +132,20 @@ public class SharedPreferencesManager {
         token.getFromJSON(jsonObject);
 
         return token;
+    }
+
+    public synchronized void saveLastTestResult(boolean testResult) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("lastTestResult", testResult);
+        jsonObject.put("lastTestResultDate", new Date().getTime());
+
+        sharedPrefEditor.putString(SP_LAST_TEST_RESULT, jsonObject.toString());
+        sharedPrefEditor.apply();
+    }
+
+    public JSONObject getLastTestResult() throws JSONException {
+        return new JSONObject(sharedPreferences.getString(SP_LAST_TEST_RESULT, SP_DEFAULT_VALUE));
     }
 
     public void sendMessageToEmergencyContactList(Context context) throws JSONException{

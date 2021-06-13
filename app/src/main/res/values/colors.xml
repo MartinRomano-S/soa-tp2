@@ -15,4 +15,8 @@
     <color name="colorPrimaryShadow">#b3d5ff</color>
     <color name="colorPrimaryLightShadow">#d9d9d9</color>
     <color name="colorPrimaryDarkShadow">#003a80</color>
+
+    <!-- Alert colors -->
+    <color name="colorSuccess">#d4edda</color>
+    <color name="colorError">#f8d7da</color>
 </resources>

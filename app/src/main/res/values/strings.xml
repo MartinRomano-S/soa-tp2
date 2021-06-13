@@ -52,6 +52,18 @@
     <string name="networkError">El dispositivo no se encuentra conectado a la red.</string>
     <string name="someEmptyField">Algún campo está vacio o incorrecto</string>
 
+    <!-- TEXTOS HOME -->
+    <string name="lastTestResult">Resultado del último test</string>
+    <string name="testResultIcon">ícono resultado</string>
+    <string name="resultOk">sin síntomas</string>
+    <string name="resultNotOk">con síntomas</string>
+    <string name="lastTestDate">Fecha y hora del último test:\n%1$s</string>
+    <string name="lastTestDatePlaceholder">-</string>
+    <string name="btnTest">Test Rápido</string>
+    <string name="btnEmergencyContacts">Contactos de Emergencia</string>
+    <string name="btnSignOut">Cerrar sesión</string>
+
+
     <!-- TEXTOS EMAIL -->
     <string name="lblVerificationCodeSent">Se ha enviado un código de verificación a la dirección: %1$s</string>
     <string name="verificationCodeMailSubject">FasTEST | Tu código de verificación</string>
@@ -95,5 +107,6 @@
     <string name="botonVolverAHome">Volver a la home</string>
     <string name="iconoAlertText">Icono de alerta</string>
     <string name="smsMessage">¡Hola! Tengo síntomas compatibles con COVID.</string>
+    <string name="testPlaceholder">¡Haz tu primer test!</string>
 
 </resources>

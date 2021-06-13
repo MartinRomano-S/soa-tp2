@@ -21,8 +21,8 @@
 
   <ScrollView
       android:id="@+id/scrollView"
-      android:layout_width="411dp"
-      android:layout_height="590dp"
+      android:layout_width="match_parent"
+      android:layout_height="580dp"
       android:fillViewport="true"
       app:layout_constraintBottom_toTopOf="@id/testConsultar"
       app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/button_primary"
               android:text="@string/minus"
-              android:textColor="@color/colorPrimary"></Button>
+              android:textColor="@color/colorPrimary"/>
 
           <TextView
               android:id="@+id/temperaturaCorporal"
@@ -74,7 +74,7 @@
               android:layout_height="wrap_content"
               android:text="@string/temperaturaDefault"
               android:textAlignment="center"
-              android:layout_marginLeft="16dp"
+              android:layout_marginStart="16dp"
               android:textStyle="bold"
               app:layout_constraintStart_toEndOf="@+id/temperaturaMenos"
               />
@@ -87,7 +87,7 @@
               android:background="@drawable/button_primary"
               android:text="@string/plus"
               android:textColor="@color/colorPrimary"
-              app:layout_constraintStart_toEndOf="@+id/temperaturaCorporal"></Button>
+              app:layout_constraintStart_toEndOf="@+id/temperaturaCorporal"/>
 
         </LinearLayout>
 
@@ -120,7 +120,7 @@
             android:id="@+id/radioOlfatoSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioOlfatoNo"
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -156,7 +156,7 @@
             android:id="@+id/radioGustoSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioGustoNo"
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -192,7 +192,7 @@
             android:id="@+id/radioTosSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioTosNo"
@@ -200,7 +200,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -228,7 +228,7 @@
             android:id="@+id/radioDolorGargantaSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioDolorGargantaNo"
@@ -236,7 +236,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -264,7 +264,7 @@
             android:id="@+id/radioDificultadRespiratoriaSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioDificultadRespiratoriaNo"
@@ -272,7 +272,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -300,7 +300,7 @@
             android:id="@+id/radioDolorCabezaSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioDolorCabezaNo"
@@ -308,7 +308,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -336,7 +336,7 @@
             android:id="@+id/radioDiarreaSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioDiarreaNo"
@@ -344,7 +344,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -372,7 +372,7 @@
             android:id="@+id/radioVomitosSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioVomitosNo"
@@ -380,7 +380,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -408,7 +408,7 @@
             android:id="@+id/radioDolorMuscularSi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/si"></RadioButton>
+            android:text="@string/si"/>
 
         <RadioButton
             android:id="@+id/radioDolorMuscularNo"
@@ -416,7 +416,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/no"
-            app:layout_constraintEnd_toEndOf="parent"></RadioButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
       </RadioGroup>
 
@@ -424,19 +424,17 @@
 
   </ScrollView>
 
-
   <Button
       android:id="@+id/testConsultar"
-      android:layout_width="150dp"
+      android:layout_width="250dp"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
+      android:layout_marginBottom="50dp"
       android:background="@drawable/button_primary"
       android:text="@string/consultar"
       android:textColor="@color/colorPrimary"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
-      app:layout_constraintStart_toStartOf="parent"></Button>
+      app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
