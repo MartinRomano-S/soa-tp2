@@ -53,11 +53,6 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         spm = SharedPreferencesManager.getInstance(this);
 
-        try {
-            Toast.makeText(this, spm.getTokenInfo().toJSON().toString(), Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Intent i = getIntent();
         email = i.getStringExtra("email");
 

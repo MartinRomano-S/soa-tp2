@@ -36,8 +36,8 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
 
     Button botonLlamar, botonMensajear, botonVolverAHome;
     SensorManager sensorManager;
-    Sensor proximitySensor, mAccelerometer;
-    private ShakeDetector mShakeDetector;
+    Sensor proximitySensor, accelerometerSensor;
+    private ShakeDetector shakeDetectorEventListener;
     SharedPreferencesManager spm;
     Token token;
     boolean tokenWasInvalid;
@@ -100,26 +100,14 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         if(sensorManager != null) {
+
             // Desde el sensor service llamo al sensor de proximidad
             proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-
-            // Si el teléfono no tiene sensor de proximidad
-            if (proximitySensor == null) {
-                Toast.makeText(this, "El teléfono no cuenta con sensor de proximidad.", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                // Registro el sensor con el sensor manager
-                sensorManager.registerListener(proximitySensorEventListener,
-                        proximitySensor,
-                        SensorManager.SENSOR_DELAY_NORMAL);
-            }
-
             // SHAKE
-
             // ShakeDetector initialization
-            mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            mShakeDetector = new ShakeDetector();
-            mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            shakeDetectorEventListener = new ShakeDetector();
+            shakeDetectorEventListener.setOnShakeListener(new ShakeDetector.OnShakeListener() {
 
                 @Override
                 public void onShake(int count) {
@@ -146,6 +134,9 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
                     }
                 }
             });
+        } else {
+            Toast.makeText(this, "Se produjo un error al comunicarse con los sensores.", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -168,14 +159,23 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
     @Override
     public void onResume() {
         super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
-        sensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+
+        // Si el teléfono no tiene sensor de proximidad
+        if (proximitySensor == null) {
+            Toast.makeText(this, "El teléfono no cuenta con sensor de proximidad.", Toast.LENGTH_SHORT).show();
+            finish();
+        } else
+            // Registro el sensor con el sensor manager
+            sensorManager.registerListener(proximitySensorEventListener, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        sensorManager.registerListener(shakeDetectorEventListener, accelerometerSensor,	SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
         // Add the following line to unregister the Sensor Manager onPause
-        sensorManager.unregisterListener(mShakeDetector);
+        sensorManager.unregisterListener(proximitySensorEventListener);
+        sensorManager.unregisterListener(shakeDetectorEventListener);
         super.onPause();
     }
 
