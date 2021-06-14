@@ -2,13 +2,10 @@ package com.example.testlogin.utils;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 import androidx.core.app.ActivityCompat;
-
-import com.example.testlogin.TestResultActivity;
 
 public class PhoneCaller {
     public static void makePhoneCall(Activity activity, String number){

@@ -1,7 +1,6 @@
 package com.example.testlogin.models;
 
 import com.example.testlogin.interfaces.JSONable;
-import com.example.testlogin.utils.Configuration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,12 +12,6 @@ public class EmergencyContact implements JSONable {
     private int phoneNumber;
 
     public EmergencyContact() {}
-
-    public EmergencyContact(int id, String name, int phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
 
     public int getId() {
         return id;

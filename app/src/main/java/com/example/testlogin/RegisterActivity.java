@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
                 String txtNameVal = txtName.getText().toString();
                 String txtLastnameVal = txtLastname.getText().toString();
 
-                if (!Configuration.isNullOrEmpty(txtEmailVal) && !Configuration.isNullOrEmpty(txtPasswordVal) && !Configuration.isNullOrEmpty(txtDNIVal) && !Configuration.isNullOrEmpty(txtNameVal) && !Configuration.isNullOrEmpty(txtLastnameVal)) {
+                if (Configuration.isNotNullOrEmpty(txtEmailVal) && Configuration.isNotNullOrEmpty(txtPasswordVal) && Configuration.isNotNullOrEmpty(txtDNIVal) && Configuration.isNotNullOrEmpty(txtNameVal) && Configuration.isNotNullOrEmpty(txtLastnameVal)) {
 
                     user = new User();
                     user.setCredentials(new Credentials(txtEmailVal, txtPasswordVal));

@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -68,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
                 String txtUserVal = txtUser.getText().toString();
                 String txtPasswordVal = txtPasswordLogin.getText().toString();
 
-                if (!Configuration.isNullOrEmpty(txtUserVal) && !Configuration.isNullOrEmpty(txtPasswordVal)) {
+                if (Configuration.isNotNullOrEmpty(txtUserVal) && Configuration.isNotNullOrEmpty(txtPasswordVal)) {
 
                     credentials = new Credentials();
                     credentials.setEmail(txtUserVal);

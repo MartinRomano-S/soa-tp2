@@ -1,33 +1,19 @@
 package com.example.testlogin.utils;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.testlogin.R;
-import com.example.testlogin.TestResultActivity;
-import com.example.testlogin.models.EmergencyContact;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Configuration {
 
@@ -86,7 +72,7 @@ public class Configuration {
         return new BigInteger(30, random).toString(32);
     }
 
-    public static boolean isNullOrEmpty(String s) {
-        return s == null || s.equals("") || s.isEmpty();
+    public static boolean isNotNullOrEmpty(String s) {
+        return s != null && !s.equals("") && !s.isEmpty();
     }
 }

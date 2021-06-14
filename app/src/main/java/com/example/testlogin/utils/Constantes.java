@@ -6,5 +6,5 @@ public class Constantes {
     public static final double TEMPERATURA_MAXIMA_CUERPO_HUMANO = 42;
     public static final String TELEFONO_ATENCION_COVID = "148";
 
-    public enum EVENT_TYPES{PROXIMITY, SHAKE};
+    public enum EVENT_TYPES{PROXIMITY, SHAKE}
 }

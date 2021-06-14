@@ -7,23 +7,10 @@ import org.json.JSONObject;
 
 public class TestAnswers implements JSONable {
 
-    double temperaturaCorporal;
+    private double temperaturaCorporal;
     private boolean olfato, gusto, tos, dolorGarganta, dificultadRespiratoria, dolorCabeza, diarrea, vomitos, dolorMuscular;
 
     public TestAnswers(){}
-
-    public TestAnswers(float temperaturaCorporal, boolean olfato, boolean gusto, boolean tos, boolean dolorGarganta, boolean dificultadRespiratoria, boolean dolorCabeza, boolean diarrea, boolean vomitos, boolean dolorMuscular) {
-        this.temperaturaCorporal=temperaturaCorporal;
-        this.olfato = olfato;
-        this.gusto = gusto;
-        this.tos= tos;
-        this.dolorGarganta = dolorGarganta;
-        this.dificultadRespiratoria = dificultadRespiratoria;
-        this.dolorCabeza=dolorCabeza;
-        this.diarrea=diarrea;
-        this.vomitos= vomitos;
-        this.dolorMuscular=dolorMuscular;
-    }
 
     public double getTemperaturaCorporal() {
         return temperaturaCorporal;
@@ -132,10 +119,13 @@ public class TestAnswers implements JSONable {
 
     }
 
-    public boolean convertAnswerToBool(CharSequence answer){
-        if ("SI".equals(answer)) {
+    private boolean convertAnswerToBool(CharSequence answer){
+
+        String answerStr = answer.toString();
+
+        if ("SI".equals(answerStr)) {
             return true;
-        } else if ("NO".equals(answer)) {
+        } else if ("NO".equals(answerStr)) {
             return false;
         }
         return false;

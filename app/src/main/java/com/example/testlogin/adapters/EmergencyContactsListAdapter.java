@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testlogin.R;
 import com.example.testlogin.models.EmergencyContact;
-import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.jetbrains.annotations.NotNull;

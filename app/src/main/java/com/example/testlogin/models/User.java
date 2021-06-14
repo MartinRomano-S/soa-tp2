@@ -1,8 +1,5 @@
 package com.example.testlogin.models;
 
-import android.widget.Toast;
-
-import com.example.testlogin.RegisterActivity;
 import com.example.testlogin.interfaces.JSONable;
 import com.example.testlogin.utils.Configuration;
 
@@ -25,7 +22,7 @@ public class User implements JSONable {
         this.name = name;
     }
 
-    public String getLastname() {
+    private String getLastname() {
         return lastname;
     }
 
@@ -33,7 +30,7 @@ public class User implements JSONable {
         this.lastname = lastname;
     }
 
-    public Integer getDni() {
+    private Integer getDni() {
         return dni;
     }
 

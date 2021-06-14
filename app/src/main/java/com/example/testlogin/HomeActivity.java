@@ -98,9 +98,12 @@ public class HomeActivity extends AppCompatActivity {
             if(lastTestResult != null) {
                 boolean result = lastTestResult.getBoolean("lastTestResult");
                 Date date = new Date(lastTestResult.getLong("lastTestResultDate"));
+                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                String fullDate = dateFormat.format(date) + " ";
+                dateFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
+                fullDate += dateFormat.format(date);
 
-                DateFormat format = android.text.format.DateFormat.getDateFormat(getApplicationContext());;
-                txtDateLastTestResult.setText(getString(R.string.lastTestDate, format.format(date)));
+                txtDateLastTestResult.setText(getString(R.string.lastTestDate, fullDate));
 
                 //Si tiene sintomas..
                 if(result) {

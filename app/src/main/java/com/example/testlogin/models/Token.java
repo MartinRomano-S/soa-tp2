@@ -1,7 +1,6 @@
 package com.example.testlogin.models;
 
 import com.example.testlogin.interfaces.JSONable;
-import com.example.testlogin.utils.Configuration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +25,7 @@ public class Token implements JSONable {
         return activeToken;
     }
 
-    public void setActiveToken(String activeToken) {
+    private void setActiveToken(String activeToken) {
         this.activeToken = activeToken;
     }
 
@@ -34,7 +33,7 @@ public class Token implements JSONable {
         return refreshToken;
     }
 
-    public void setRefreshToken(String refreshToken) {
+    private void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 
@@ -42,7 +41,7 @@ public class Token implements JSONable {
         return emmitedDate;
     }
 
-    public void setEmmitedDate(Date emmitedDate) {
+    private void setEmmitedDate(Date emmitedDate) {
         this.emmitedDate = emmitedDate;
     }
 

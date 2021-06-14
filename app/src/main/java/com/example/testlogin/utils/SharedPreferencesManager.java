@@ -5,8 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.telephony.SmsManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -148,16 +146,22 @@ public class SharedPreferencesManager {
         return new JSONObject(sharedPreferences.getString(SP_LAST_TEST_RESULT, SP_DEFAULT_VALUE));
     }
 
-    public void sendMessageToEmergencyContactList(Context context) throws JSONException{
-        JSONArray jsonArray = new JSONArray(sharedPreferences.getString(SP_EMERGENCY_CONTACT_LIST, new JSONArray().toString()));
-        String message = context.getResources().getString(R.string.smsMessage);
-        for(int i = 0; i < jsonArray.length(); i++) {
-            EmergencyContact ec = new EmergencyContact();
-            ec.getFromJSON(jsonArray.getJSONObject(i));
-            SMSSender.sendSMS("+549"+ec.getPhoneNumber(), message);
-        }
-        Toast.makeText(context, "Mensaje enviado a "+jsonArray.length()+" contacto/s de emergencia.", Toast.LENGTH_SHORT).show();
+    public void sendMessageToEmergencyContactList(Activity activity) throws JSONException{
 
+        if(!Configuration.checkPermission(activity, Manifest.permission.SEND_SMS))
+            ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.SEND_SMS}, 1);
+
+        if(Configuration.checkPermission(activity, Manifest.permission.SEND_SMS)) {
+
+            JSONArray jsonArray = new JSONArray(sharedPreferences.getString(SP_EMERGENCY_CONTACT_LIST, new JSONArray().toString()));
+            String message = activity.getResources().getString(R.string.smsMessage);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                EmergencyContact ec = new EmergencyContact();
+                ec.getFromJSON(jsonArray.getJSONObject(i));
+                SMSSender.sendSMS("+549" + ec.getPhoneNumber(), message);
+            }
+            Toast.makeText(activity, "Mensaje enviado a " + jsonArray.length() + " contacto/s de emergencia.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public synchronized void saveLastLoginDate(long dateInMillis) {

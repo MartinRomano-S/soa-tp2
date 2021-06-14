@@ -24,7 +24,7 @@ public class Credentials implements JSONable {
         this.email = email;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 

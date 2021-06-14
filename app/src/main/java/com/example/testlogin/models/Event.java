@@ -15,12 +15,6 @@ public class Event implements JSONable {
 
     public Event(){}
 
-    public Event(Date eventDate, String type, String description) {
-        this.eventDate = eventDate;
-        this.type = type;
-        this.description = description;
-    }
-
     public Date getEventDate() {
         return eventDate;
     }

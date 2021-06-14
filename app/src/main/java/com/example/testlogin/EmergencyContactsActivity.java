@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testlogin.adapters.EmergencyContactsListAdapter;
 import com.example.testlogin.interfaces.Inputable;
 import com.example.testlogin.models.EmergencyContact;
-import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
