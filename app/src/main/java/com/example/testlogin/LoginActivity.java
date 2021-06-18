@@ -128,6 +128,19 @@ public class LoginActivity extends AppCompatActivity implements Asyncronable<JSO
         String currentToken = "";
         String tokenRefresh = "";
 
+        if(response == null) {
+            AlertDialog.Builder dialog;
+            dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(getString(R.string.titleError));
+            dialog.setMessage(msg);
+            dialog.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+            dialog.create().show();
+            return;
+        }
+
         try {
             success = response.getBoolean("success");
             currentToken = response.getString("token");

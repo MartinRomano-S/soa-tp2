@@ -68,7 +68,7 @@ public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
 
             int status = urlConnection.getResponseCode();
 
-            if (status == HttpURLConnection.HTTP_OK)
+            if (status == HttpURLConnection.HTTP_OK || (status == HttpURLConnection.HTTP_CREATED && endpoint.equals(Configuration.API_EVENT_ENDPOINT)))
                 in = urlConnection.getInputStream();
             else
                 in = urlConnection.getErrorStream();

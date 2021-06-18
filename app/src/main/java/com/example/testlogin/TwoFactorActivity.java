@@ -104,6 +104,6 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
     @Override
     public void afterRequest(String response) {
-        Toast.makeText(this, spm.getCurrentVerificationCode(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Email enviado.", Toast.LENGTH_SHORT).show();
     }
 }

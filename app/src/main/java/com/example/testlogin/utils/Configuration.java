@@ -24,10 +24,11 @@ import java.security.SecureRandom;
 public class Configuration {
 
     //API SOA
-    public static final String API_ENVIRONMENT = "TEST";
+    public static final String API_ENVIRONMENT = "PROD";
     public static final int COMMISSION = 3900;
     public static final int GROUP = 4;
     public static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
+    public static final String API_EVENT_ENDPOINT = API_BASE_URL + "event";
     public static final int REQUEST_READ_TIMEOUT = 10000;
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
     public static final int MINIMUM_PASSWORD_LENGTH = 8;

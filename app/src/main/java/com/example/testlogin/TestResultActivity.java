@@ -197,23 +197,26 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
                 if (event.values[0] == 0) {
 
-                    Event eventInfo = new Event();
-                    eventInfo.setEventDate(new Date());
-                    eventInfo.setDescription("Se ha activado el sensor de proximidad.");
-                    eventInfo.setType(Constantes.EVENT_TYPES.PROXIMITY.toString());
-
                     try {
-                        spm.saveEvent(eventInfo);
+
+                        Event eventInfo = new Event();
+                        eventInfo.setEventDate(new Date());
+                        eventInfo.setDescription("Se ha activado el sensor de proximidad.");
+                        eventInfo.setType(Constantes.EVENT_TYPES.PROXIMITY.toString());
+
+                        try {
+                            spm.saveEvent(eventInfo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        pendingEvent = eventInfo;
+                        registerEvent();
+
+                        PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    if(Configuration.isNetworkConnected(TestResultActivity.this)) {
-                        AsyncHttpRequest asyncHttpRequest = new AsyncHttpRequest(TestResultActivity.this, getString(R.string.api_event_url), SOAAPIallowedMethodsEnum.POST, null, eventInfo.toJSON());
-                        asyncHttpRequest.execute();
-                    }
-
-                    PhoneCaller.makePhoneCall(TestResultActivity.this,Constantes.TELEFONO_ATENCION_COVID);
                 }
             }
         }
@@ -229,6 +232,11 @@ public class TestResultActivity extends AppCompatActivity implements Asyncronabl
     public void afterRequest(JSONObject response) {
 
         boolean success;
+
+        if(response == null) {
+            Toast.makeText(this, "Evento NO registrado", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         try {
             success = response.getBoolean("success");

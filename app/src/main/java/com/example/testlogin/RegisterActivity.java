@@ -122,6 +122,17 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
         String currentToken = "";
         String tokenRefresh = "";
 
+        if(response == null) {
+            dialog.setTitle(getString(R.string.titleError));
+            dialog.setMessage(msg);
+            dialog.setPositiveButton(getString(R.string.acceptButton), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+            dialog.create().show();
+            return;
+        }
+
         try {
             success = response.getBoolean("success");
             currentToken = response.getString("token");
