@@ -14,6 +14,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * EventsListAdapter class
+ * Esta clase se encarga de adaptar el objeto Event
+ * en una lista.
+ * Solo contiene los métodos necesarios para la clase heredada RecyclerView.Adapter
+ */
 public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> {
 
     private List<Event> events;

@@ -5,6 +5,11 @@ import com.example.testlogin.interfaces.JSONable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Credentials
+ * Objeto model que representa las credenciales
+ * con las que el usuario inicia sesión en la app
+ */
 public class Credentials implements JSONable {
     private String email;
     private String password;

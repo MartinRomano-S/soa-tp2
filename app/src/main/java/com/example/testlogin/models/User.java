@@ -6,6 +6,10 @@ import com.example.testlogin.utils.Configuration;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * User
+ * Objeto model que representa al usuario que inicia sesión.
+ */
 public class User implements JSONable {
     private String name;
     private String lastname;

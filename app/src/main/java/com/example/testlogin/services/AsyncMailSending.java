@@ -15,6 +15,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * AsyncHttpRequest
+ * Clase genérica para gestionar el envío de mails para la
+ * autenticación doble factor en 2do plano
+ */
 public class AsyncMailSending extends AsyncTask<Void, Void, String> {
 
     private Asyncronable<String> asyncronable;
@@ -32,7 +37,7 @@ public class AsyncMailSending extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        asyncronable.showProgress("Sending message");
+        asyncronable.showProgress("Enviando mensaje...");
     }
 
     @Override
@@ -40,12 +45,12 @@ public class AsyncMailSending extends AsyncTask<Void, Void, String> {
         super.onPostExecute(msg);
         asyncronable.hideProgress();
         asyncronable.afterRequest(msg);
-        //Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected String doInBackground(Void... params) {
 
+        //Properties fijas para los Jars que gestionan el envío
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -55,12 +60,13 @@ public class AsyncMailSending extends AsyncTask<Void, Void, String> {
 
         Session mSession = Session.getDefaultInstance(props,
             new javax.mail.Authenticator() {
-                //Authenticating the password
+                //Valida la contraseña ingresada
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(Configuration.VERIFICATION_EMAIL, Configuration.VERIFICATION_PASSWORD);
                 }
             });
 
+        //Envío de mail
         try {
             MimeMessage mm = new MimeMessage(mSession);
             mm.setFrom(new InternetAddress(Configuration.VERIFICATION_EMAIL));

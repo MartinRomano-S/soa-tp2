@@ -5,6 +5,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * ShakeDetector
+ * Clase que se encarga de detectar si el shake fue
+ * activado.
+ *
+ * Además, provee un humbral de 3 segundos para no generar
+ * eventos de mas
+ */
 public class ShakeDetector implements SensorEventListener {
     private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
     private static final int SHAKE_SLOP_TIME_MS = 2000;

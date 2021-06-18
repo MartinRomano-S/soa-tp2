@@ -7,6 +7,11 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+/**
+ * Token
+ * Objeto model que es utilizado para gestionar el acceso
+ * a la API provista por la cátedra
+ */
 public class Token implements JSONable {
 
     private String activeToken;

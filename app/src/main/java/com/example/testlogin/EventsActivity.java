@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Pantalla para la visualización de la lista de eventos
+ */
 public class EventsActivity extends AppCompatActivity {
 
     RecyclerView listEvents;

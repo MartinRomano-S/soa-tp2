@@ -21,7 +21,13 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Clase genérica para gestionar request en una tarea en segundo plano
+ * AsyncHttpRequest
+ * Clase genérica para gestionar request a la API provista por la
+ * cátedra en segundo plano.
+ *
+ * Tiene la capacidad de enviar tanto las request iniciales sin token
+ * como las request de eventos que necesitan token. Además, permite
+ * obtener un nuevo token en caso de que esté vencido.
  */
 public class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
 

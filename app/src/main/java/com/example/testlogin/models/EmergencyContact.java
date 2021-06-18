@@ -5,6 +5,12 @@ import com.example.testlogin.interfaces.JSONable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * EmergencyContact
+ * Objeto model que representa un contacto de emergencia
+ * estos contactos son ingresados por el usuario y sirven
+ * para enviarles notificaciones por SMS.
+ */
 public class EmergencyContact implements JSONable {
 
     private int id;

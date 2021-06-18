@@ -5,6 +5,14 @@ import com.example.testlogin.interfaces.JSONable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * TestAnswers
+ * Objeto model que representa las respuestas dadas
+ * por un usuario en el test rápido de COVID-19
+ *
+ * Es utilizado para validar si un usuario tiene
+ * sintomas compatibles o no con ésta enfermedad
+ */
 public class TestAnswers implements JSONable {
 
     private double temperaturaCorporal;

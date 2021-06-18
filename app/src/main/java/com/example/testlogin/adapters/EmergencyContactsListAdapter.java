@@ -17,14 +17,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * EmergencyContactsListAdapter class
+ * Esta clase se encarga de adaptar el objeto EmergencyContact
+ * en una lista.
+ * Solo contiene los métodos necesarios para la clase heredada RecyclerView.Adapter
+ */
 public class EmergencyContactsListAdapter extends RecyclerView.Adapter<EmergencyContactsListAdapter.ViewHolder> {
     private List<EmergencyContact> emergencyContacts;
     private Activity callerActivity;
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtECNameItem;
         private TextView txtECNumberItem;
@@ -66,10 +68,8 @@ public class EmergencyContactsListAdapter extends RecyclerView.Adapter<Emergency
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.emergency_contact_item, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
@@ -83,6 +83,7 @@ public class EmergencyContactsListAdapter extends RecyclerView.Adapter<Emergency
         viewHolder.getTxtECNameItemView().setText(emergencyContact.getName());
         viewHolder.getTxtECNumberItemView().setText(String.valueOf(emergencyContact.getPhoneNumber()));
 
+         //También permitimos el borrado de los contactos por medio de este OnClickListener
         viewHolder.getImgDelete().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +96,6 @@ public class EmergencyContactsListAdapter extends RecyclerView.Adapter<Emergency
         });
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return emergencyContacts.size();

@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Pantalla de registración de usuario
+ */
 public class RegisterActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
     Button btnCancel;
@@ -159,8 +162,6 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
             });
             dialog.create().show();
         }
-
-
     }
 
     private void addTextChangedListeners() {

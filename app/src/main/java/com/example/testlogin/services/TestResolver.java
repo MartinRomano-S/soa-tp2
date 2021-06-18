@@ -4,6 +4,11 @@ package com.example.testlogin.services;
 import com.example.testlogin.models.TestAnswers;
 import com.example.testlogin.utils.Constantes;
 
+/**
+ * TestResolver
+ * Esta clase se encarga de validar las TestAnswers ingresadas
+ * por el usuario
+ */
 public class TestResolver {
     private TestAnswers testAnswers;
 

@@ -18,6 +18,9 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.util.Date;
 
+/**
+ * Pantalla de home, donde está el acceso a todas las opciones de la app
+ */
 public class HomeActivity extends AppCompatActivity {
 
     Button btnGoToTest;

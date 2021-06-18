@@ -1,9 +1,7 @@
 package com.example.testlogin;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,21 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.testlogin.interfaces.Asyncronable;
 import com.example.testlogin.services.AsyncMailSending;
 import com.example.testlogin.utils.Configuration;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
-import org.json.JSONException;
-
 import java.util.Date;
 
 /**
- * EXPERIMENTAL
- *
- * Funciona el envío de SMS pero se duplican ya que tienen como SOURCE el mismo numero
+ * Pantalla que se encarga de enviar el código y de la verificación del código de doble factor
  */
 public class TwoFactorActivity extends AppCompatActivity implements Asyncronable<String> {
 
@@ -58,8 +51,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
 
         txtLblVerificationCode.setText(getString(R.string.lblVerificationCodeSent, email));
 
-        //TODO DESCOMENTAR ESTA LINEA
-        //sendEmailVerificationCode(email);
+        sendEmailVerificationCode(email);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +70,7 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
             public void onClick(View view) {
                 String inputCode = txtVerificationCode.getText().toString();
 
-                //TODO QUITAR ESTA VARIABLE
-                boolean enabled = false;
-
-                //TODO QUITAR BLOQUE DE ARRIBA Y DESCOMENTAR ESTE BLOQUE
-                if(!enabled || (inputCode.length() > 0 && inputCode.equals(spm.getCurrentVerificationCode()))) {
+                if(inputCode.length() > 0 && inputCode.equals(spm.getCurrentVerificationCode())) {
                     spm.saveLastLoginDate(new Date().getTime());
                     Intent i = new Intent(TwoFactorActivity.this, HomeActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
@@ -94,19 +82,6 @@ public class TwoFactorActivity extends AppCompatActivity implements Asyncronable
             }
         });
 
-    }
-
-    public void sendSMSVerificationCode() {
-        if(!Configuration.checkPermission(this, Manifest.permission.SEND_SMS))
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, 1);
-
-        if(Configuration.checkPermission(this, Manifest.permission.SEND_SMS)) {
-            String messageToSend = Configuration.generateRandomCode();
-            spm.saveCurrentVerificationCode(messageToSend);
-            String number = "5491157582119";
-
-            SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null,null);
-        }
     }
 
     public void sendEmailVerificationCode(String email) {

@@ -8,6 +8,14 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+/**
+ * Event
+ * Objeto model que representa un evento ocurrido en la app
+ * y es usado para registrarlo en el Listado de Eventos y
+ * además en la API provista por la cátedra.
+ *
+ * Eventos registrables: Shake, Proximidad
+ */
 public class Event implements JSONable {
     private Date eventDate;
     private String type;

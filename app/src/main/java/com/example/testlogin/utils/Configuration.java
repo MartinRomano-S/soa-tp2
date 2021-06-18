@@ -15,15 +15,18 @@ import com.example.testlogin.R;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+/**
+ * Configuration
+ *
+ * Clase con algunas utilidades usadas por la app
+ * y algunas constantes necesarias.
+ */
 public class Configuration {
 
+    //API SOA
     public static final String API_ENVIRONMENT = "TEST";
     public static final int COMMISSION = 3900;
     public static final int GROUP = 4;
-
-    public static final String VERIFICATION_EMAIL = "fastestappsoa@gmail.com";
-    public static final String VERIFICATION_PASSWORD = "prueba123";
-
     public static final String API_BASE_URL = "http://so-unlam.net.ar/api/api/";
     public static final int REQUEST_READ_TIMEOUT = 10000;
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
@@ -32,11 +35,32 @@ public class Configuration {
     public static final String DNI_PATTERN = "[0-9]";
     public static final int TOKEN_REFRESH_TIME = 28;
 
+    //Con esta cuenta se realiza el envío de mail.
+    //Prohibido robarla (?)
+    public static final String VERIFICATION_EMAIL = "fastestappsoa@gmail.com";
+    public static final String VERIFICATION_PASSWORD = "prueba123";
+
+    //Constantes para generación de código para doble factor
+    private static final int RANDOM_CODE_NUM_BITS = 30;
+    private static final int RANDOM_CODE_STRING_RADIX = 32;
+
+    /**
+     * Método para validar si la app tiene permisos específicos
+     * @param c: Contexto. La activity que hizo el llamado
+     * @param permission: Permiso que se quiere validar
+     * @return true o false según si tiene permiso o no
+     */
     public static boolean checkPermission(Context c, String permission) {
         int check = ContextCompat.checkSelfPermission(c, permission);
         return (check == PackageManager.PERMISSION_GRANTED);
     }
 
+    /**
+     * Método para validar si el dispositivo está conectado a
+     * WI-FI, Ethernet o redes móviles (3G, 4G, etc)
+     * @param c: Contexto. La activity que hizo el llamado
+     * @return true o false según si está conectado o no
+     */
     public static boolean isNetworkConnected(Context c) {
         ConnectivityManager connectivityManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -53,6 +77,12 @@ public class Configuration {
         return false;
     }
 
+    /**
+     * Método para mostrar un modal genérico con título y mensaje
+     * @param c: Contexto. La activity que hizo el llamado
+     * @param title: Título del modal
+     * @param msg: Mensaje del modal
+     */
     public static void showModalMessage(Context c, String title, String msg) {
         AlertDialog.Builder dialog;
         dialog = new AlertDialog.Builder(c);
@@ -67,11 +97,26 @@ public class Configuration {
         dialog.create().show();
     }
 
+    /**
+     * Método que se encarga de generar un código aleatorio para
+     * la autenticación de doble factor
+     * @return código aleatorio
+     */
     public static String generateRandomCode() {
         SecureRandom random = new SecureRandom();
-        return new BigInteger(30, random).toString(32);
+
+        /*
+        Esta línea se encarga de generar un número aleatorio para
+        la autenticación de doble factor
+         */
+        return new BigInteger(RANDOM_CODE_NUM_BITS, random).toString(RANDOM_CODE_STRING_RADIX);
     }
 
+    /**
+     * Método para validar si una cadena no está vacía o nula
+     * @param s: Cadena a validar
+     * @return true o false según si no está vacía o si lo está
+     */
     public static boolean isNotNullOrEmpty(String s) {
         return s != null && !s.equals("") && !s.isEmpty();
     }

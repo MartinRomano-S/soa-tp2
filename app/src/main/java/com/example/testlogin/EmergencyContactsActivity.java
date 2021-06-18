@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testlogin.adapters.EmergencyContactsListAdapter;
 import com.example.testlogin.interfaces.Inputable;
 import com.example.testlogin.models.EmergencyContact;
+import com.example.testlogin.utils.Constantes;
 import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
@@ -23,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * EmergencyContactsActivity
+ * Activity para la alta y baja de contactos de emergencia
+ */
 public class EmergencyContactsActivity extends AppCompatActivity implements Inputable {
 
     RecyclerView listEmergencyContacts;
@@ -50,7 +55,6 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
         divider.setDrawable(Objects.requireNonNull(getDrawable(R.drawable.divider)));
         listEmergencyContacts.addItemDecoration(divider);
         emergencyContacts = null;
-        //Configuration.removeEmergencyContactList(this);
 
         try {
             emergencyContacts = spm.getEmergencyContactList();
@@ -70,14 +74,14 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
                 String txtNameValue = txtECName.getText().toString();
                 String txtNumberValue = txtECNumber.getText().toString();
 
-                if(txtNumberValue.length() >= 2) {
-                    String numPrefix = txtNumberValue.substring(0, 2);
+                if(txtNumberValue.length() >= Constantes.LONGITUD_PREFIJO) {
+                    String numPrefix = txtNumberValue.substring(0, Constantes.LONGITUD_PREFIJO);
 
-                    if(!numPrefix.equals("15") && !numPrefix.equals("11"))
+                    if(!numPrefix.equals(Constantes.PREFIJO_TELEFONO_15) && !numPrefix.equals(Constantes.PREFIJO_TELEFONO_11))
                         return;
                 }
 
-                if(txtNameValue.length() > 0 && txtNumberValue.length() == 10) {
+                if(txtNameValue.length() > 0 && txtNumberValue.length() == Constantes.LONGITUD_TELEFONO) {
                     EmergencyContact ec = new EmergencyContact();
 
                     int newId;
@@ -130,14 +134,14 @@ public class EmergencyContactsActivity extends AppCompatActivity implements Inpu
 
                 String txtValue = txtECNumber.getText().toString();
 
-                if(txtValue.length() >= 2) {
-                    String numPrefix = txtValue.substring(0, 2);
+                if(txtValue.length() >= Constantes.LONGITUD_PREFIJO) {
+                    String numPrefix = txtValue.substring(0, Constantes.LONGITUD_PREFIJO);
 
-                    if(!numPrefix.equals("15") && !numPrefix.equals("11"))
+                    if(!numPrefix.equals(Constantes.PREFIJO_TELEFONO_15) && !numPrefix.equals(Constantes.PREFIJO_TELEFONO_11))
                         txtECNumber.setError(getString(R.string.errorPhoneNumberFormat));
                 }
 
-                if(txtValue.length() != 10)
+                if(txtValue.length() != Constantes.LONGITUD_TELEFONO)
                     txtECNumber.setError(getString(R.string.errorPhoneNumberFormat));
             }
 

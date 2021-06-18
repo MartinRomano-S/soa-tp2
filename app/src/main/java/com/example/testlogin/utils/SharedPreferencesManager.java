@@ -25,6 +25,8 @@ import java.util.List;
 /**
  * SharedPreferencesManager
  *
+ * Gestiona el acceso para la consulta y guardado de información en el dispositivo
+ *
  * La manejamos como un Singleton de acceso a las preferences con métodos sincronizados
  * para evitar fallos al guardar
  */

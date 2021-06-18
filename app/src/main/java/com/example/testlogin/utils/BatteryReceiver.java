@@ -12,7 +12,20 @@ import androidx.core.content.ContextCompat;
 import com.example.testlogin.LoginActivity;
 import com.example.testlogin.R;
 
+/**
+ * BatteryReceiver
+ *
+ * Esta clase se encarga de escuchar los eventos de la batería
+ * y mostrarlos en la pantalla del Login
+ */
 public class BatteryReceiver extends BroadcastReceiver {
+
+    private static final int BATTERY_PERCENTAGE_99 = 99;
+    private static final int BATTERY_PERCENTAGE_90 = 90;
+    private static final int BATTERY_PERCENTAGE_80 = 80;
+    private static final int BATTERY_PERCENTAGE_60 = 60;
+    private static final int BATTERY_PERCENTAGE_40 = 40;
+    private static final int BATTERY_PERCENTAGE_30 = 30;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -23,6 +36,7 @@ public class BatteryReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
 
+        //Validamos que la acción sea un cambio en el nivel o estado de la batería
         if(action != null && action.equals(Intent.ACTION_BATTERY_CHANGED)) {
 
             int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
@@ -31,6 +45,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             int percentage = level * 100 / scale;
             txtBattery.setText(context.getString(R.string.lblBattery, percentage));
 
+            //Controlamos en que estado se encuentra la batería
             switch (status) {
                 case BatteryManager.BATTERY_STATUS_FULL:
                     imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_100));
@@ -47,17 +62,18 @@ public class BatteryReceiver extends BroadcastReceiver {
                     break;
             }
 
-            if(percentage >= 99)
+            //Según el nivel actual de batería cambiamos la imágen que se muestra en la pantalla.
+            if(percentage >= BATTERY_PERCENTAGE_99)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_100));
-            else if (percentage >= 90)
+            else if (percentage >= BATTERY_PERCENTAGE_90)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_90));
-            else if (percentage >= 80)
+            else if (percentage >= BATTERY_PERCENTAGE_80)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_80));
-            else if (percentage >= 60)
+            else if (percentage >= BATTERY_PERCENTAGE_60)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_60));
-            else if (percentage >= 40)
+            else if (percentage >= BATTERY_PERCENTAGE_40)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_50));
-            else if (percentage >= 30)
+            else if (percentage >= BATTERY_PERCENTAGE_30)
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_30));
             else
                 imgBatteryLevel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_battery_20));

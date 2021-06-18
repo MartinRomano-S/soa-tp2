@@ -32,6 +32,11 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+/**
+ * Pantalla del resultado con sintomas del test de covid-19
+ * permite hacer llamados al 148 a traves del sensor de proximidad
+ * envío de SMS al listado de contactos de emergencia por medio del Shake
+ */
 public class TestResultActivity extends AppCompatActivity implements Asyncronable<JSONObject> {
 
     Button botonLlamar, botonMensajear, botonVolverAHome;

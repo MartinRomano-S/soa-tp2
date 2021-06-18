@@ -108,5 +108,7 @@
     <string name="iconoAlertText">Icono de alerta</string>
     <string name="smsMessage">¡Hola! Tengo síntomas compatibles con COVID.</string>
     <string name="testPlaceholder">¡Haz tu primer test!</string>
+    <string name="batteryCharging">Cargando</string>
+    <string name="batteryLevel">Nivel de batería</string>
 
 </resources>

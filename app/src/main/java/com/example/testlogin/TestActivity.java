@@ -20,6 +20,9 @@ import com.example.testlogin.utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 
+/**
+ * Pantalla del test de covid-19
+ */
 public class TestActivity extends AppCompatActivity {
 
     RadioGroup grupoRespuestaOlfato, grupoRespuestaGusto, grupoRespuestaTos, grupoRespuestaDolorGarganta, grupoRespuestaDificultarRespiratoria, grupoRespuestaDolorCabeza, grupoRespuestaDiarrea, grupoRespuestaVomitos, grupoRespuestaDolorMuscular;
