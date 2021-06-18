@@ -214,7 +214,7 @@ public class RegisterActivity extends AppCompatActivity implements Asyncronable<
                 Pattern p = Patterns.EMAIL_ADDRESS;
                 Matcher m = p.matcher(txtValue);
 
-                if(!m.matches() || txtValue.length() > Configuration.MAX_DNI_LENGTH)
+                if(!m.matches() || txtValue.length() == 0)
                     txtEmail.setError(getString(R.string.errorInvalidMail));
             }
 

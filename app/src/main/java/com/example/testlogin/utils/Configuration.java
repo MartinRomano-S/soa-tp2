@@ -32,7 +32,7 @@ public class Configuration {
     public static final int REQUEST_CONNECTION_TIMEOUT = 20000;
     public static final int MINIMUM_PASSWORD_LENGTH = 8;
     public static final int MAX_DNI_LENGTH = 8;
-    public static final String DNI_PATTERN = "[0-9]";
+    public static final String DNI_PATTERN = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
     public static final int TOKEN_REFRESH_TIME = 28;
 
     //Con esta cuenta se realiza el envío de mail.
